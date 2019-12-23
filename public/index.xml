@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>pinab</title>
+    <link>/</link>
+    <description>Recent content on pinab</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 24 Dec 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>The way we make life</title>
+      <link>/projects/the-way-we-make-life/</link>
+      <pubDate>Tue, 24 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/projects/the-way-we-make-life/</guid>
+      <description>A recent findings proved the hard way we human h…</description>
+    </item>
+    
+    <item>
+      <title>Mapping with Cartopy in Python</title>
+      <link>/post/mapping-with-cartopy-in-python/</link>
+      <pubDate>Mon, 23 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/mapping-with-cartopy-in-python/</guid>
+      <description>Today we will learn about Cartopy, one of the most common packages for making maps within python, Another popular and powerful library is Basemap; however, Basemap is going away and being replaced with Cartopy in the near future, For this reason, investing your time in learning mapping in python with Cartopy module is recommended.</description>
+    </item>
+    
+    <item>
+      <title>Python for Oceeanographers and Marine Scientists</title>
+      <link>/post/python-for-oceeanographers-and-marine-scientists/</link>
+      <pubDate>Mon, 23 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/python-for-oceeanographers-and-marine-scientists/</guid>
+      <description>During the last couple of decades, Matlab has been the most commonly-used scripting language in physical oceanography, and it has a large user base in many other fields— however, Python has been gaining ground, often being adopted by former Matlab users as well as by newcomers.</description>
+    </item>
+    
+    <item>
+      <title>Make use both of R and Python languages for efficient data science</title>
+      <link>/post/make-use-both-of-r-and-python-languages-for-efficient-data-science/</link>
+      <pubDate>Sun, 22 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/make-use-both-of-r-and-python-languages-for-efficient-data-science/</guid>
+      <description>dlab organized the second Data Tamasha from 4 to 6 December, 2019, that provide an opportunity to company, goverment organization, students and non-govermental organizationto showcase some of the ground–breaking solution in this digital age era.</description>
+    </item>
+    
+    <item>
+      <title>John Doe</title>
+      <link>/author/john-doe/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/author/john-doe/</guid>
+      <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</description>
+    </item>
+    
+    <item>
+      <title>Mark Dinn</title>
+      <link>/author/mark-dinn/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/author/mark-dinn/</guid>
+      <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</description>
+    </item>
+    
+  </channel>
+</rss>

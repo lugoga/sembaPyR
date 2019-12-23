@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>mapping on pinab</title>
+    <link>/tags/mapping/</link>
+    <description>Recent content in mapping on pinab</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 23 Dec 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/mapping/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Mapping with Cartopy in Python</title>
+      <link>/post/mapping-with-cartopy-in-python/</link>
+      <pubDate>Mon, 23 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/mapping-with-cartopy-in-python/</guid>
+      <description>Today we will learn about Cartopy, one of the most common packages for making maps within python, Another popular and powerful library is Basemap; however, Basemap is going away and being replaced with Cartopy in the near future, For this reason, investing your time in learning mapping in python with Cartopy module is recommended.</description>
+    </item>
+    
+  </channel>
+</rss>

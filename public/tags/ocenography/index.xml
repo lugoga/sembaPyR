@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ocenography on pinab</title>
+    <link>/tags/ocenography/</link>
+    <description>Recent content in Ocenography on pinab</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 23 Dec 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/ocenography/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Python for Oceeanographers and Marine Scientists</title>
+      <link>/post/python-for-oceeanographers-and-marine-scientists/</link>
+      <pubDate>Mon, 23 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/python-for-oceeanographers-and-marine-scientists/</guid>
+      <description>During the last couple of decades, Matlab has been the most commonly-used scripting language in physical oceanography, and it has a large user base in many other fields— however, Python has been gaining ground, often being adopted by former Matlab users as well as by newcomers.</description>
+    </item>
+    
+  </channel>
+</rss>

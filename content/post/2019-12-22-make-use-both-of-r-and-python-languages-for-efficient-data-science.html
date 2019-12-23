@@ -1,0 +1,273 @@
+---
+title: Make use both of R and Python languages for efficient data science
+image: "/images/post/dlab.png"
+author: Masumbuko Semba
+date: '2019-12-22'
+slug: make-use-both-of-r-and-python-languages-for-efficient-data-science
+categories: []
+tags:
+  - Python
+  - R
+  - R Markdown
+  - data science
+---
+
+
+
+<p><a href="https://datatamasha.dlab.or.tz/">dlab</a> organized the second Data Tamasha from 4 to 6 December, 2019, that provide an opportunity to company, goverment organization, students and non-govermental organizationto showcase some of the ground–breaking solution in this digital age era. One of the key points from this Tamasha was the use of data science languages as tools in a toolkit. R, Python… Use them both. Leverage their strengths. Don’t build an “R Shop” or a “Python Shop”. Build a High Performance Data Science Team that capitalizes on the unique strengths of both languages.</p>
+<p>When you use multiple languages, you gain the ability to select the best tool for the job. The result is a language harmony that increases the data science team’s efficiency, capability, and productivity. The general idea is to be as flexible as possible so we can leverage the best of both languages within our full-stack data science workflow, which includes:</p>
+<ul>
+<li>Efficiently exploring data</li>
+<li>Modeling, Cross Validating, and Evaluating Model Quality</li>
+<li>Communicating data science to make better decisions via traditional reports (Word, PowerPoint, Excel, PDF), web-based reports (HTML), and interactive web-applications (Shiny, Django)</li>
+<li>We can make a slight modification to the R and Python Strengths visualization to organize it in a logical sequence that leverages the strengths:</li>
+<li>R is selected for exploration because of the tidyverse readability and efficiency</li>
+<li>Python is selected for machine learning because of Scikit Learn machine learning pipeline capability</li>
+<li>R is selected for communication because of the advanced reporting utilities including RMarkdown and Shiny (interactive web apps) and the wonderful ggplot2 visualization package</li>
+</ul>
+<p>The <strong>reticulate</strong> package includes a Python engine for R Markdown that enables easy interoperabilty between Python and R—the two widely used programming languages for data science. We first load the package in R chunk</p>
+<pre class="r"><code>require(reticulate)</code></pre>
+<pre><code>## Loading required package: reticulate</code></pre>
+<pre class="r"><code>require(tidyverse)</code></pre>
+<pre><code>## Loading required package: tidyverse</code></pre>
+<pre><code>## -- Attaching packages ---------------------------------------------- tidyverse 1.3.0 --</code></pre>
+<pre><code>## v ggplot2 3.2.1     v purrr   0.3.3
+## v tibble  2.1.3     v dplyr   0.8.3
+## v tidyr   1.0.0     v stringr 1.4.0
+## v readr   1.3.1     v forcats 0.4.0</code></pre>
+<pre><code>## -- Conflicts ------------------------------------------------- tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<p>By default, reticulate package use the version of Python found on your PC PATH. However, if you have more than one version of Python installed in your machine, you can use the <code>use_python</code> function to use an alternative version.</p>
+<pre class="r"><code>use_python(&quot;c:/Python/Anaconda3/&quot;)</code></pre>
+<p>For use to call the Python libraries, we need to call them from the Python Chunk and not R chunk. Python chunk all execute within a single Python session to have access to all objects created in previous chunk. Like the R chunk, all chunk options works in similar manner in Python chunk. To access python function, we first have to import their corresponding libraries.</p>
+<pre class="python"><code>
+import pandas as pd</code></pre>
+<p>We use the <code>read_excel()</code> function from pandas library to import the file from the PC to R session</p>
+<pre class="python"><code>
+sst = pd.read_excel(&quot;E:/Data Manipulation/Temperature data/processing/Chumbe_SST_Temperature 1997-30Nov2017_IMS_Muhando.xlsx&quot;)</code></pre>
+<pre class="python"><code>sst</code></pre>
+<pre><code>##            day       1997       1998  ...       2015       2016       2017
+## 0   1997-01-01  27.830167  29.779000  ...  28.914583  28.942917  29.215833
+## 1   1997-01-02  27.889833  29.669333  ...  28.829583  28.886250  29.354375
+## 2   1997-01-03  27.932833  29.495333  ...  28.631250  28.928750  29.420833
+## 3   1997-01-04  28.025000  29.241333  ...  28.517917  28.893333  29.532083
+## 4   1997-01-05  28.058333  28.829000  ...  28.397500  28.935833  29.744792
+## ..         ...        ...        ...  ...        ...        ...        ...
+## 361 1997-12-27  29.380139  29.329375  ...  28.850833  29.096458        NaN
+## 362 1997-12-28  29.379722  29.334792  ...  28.709167  28.665625        NaN
+## 363 1997-12-29  29.469583  29.330833  ...  28.872083  28.734792        NaN
+## 364 1997-12-30  29.616111  29.042222  ...  28.964167  28.966458        NaN
+## 365 1997-12-31  29.839583  29.086389  ...  28.900417  29.173750        NaN
+## 
+## [366 rows x 22 columns]</code></pre>
+<pre class="python"><code>import seaborn as sns
+import matplotlib.pyplot as plt</code></pre>
+<pre class="python"><code># fig, axes = plt.subplots(nrows=1, ncols=1)
+
+# fig, axes = plt.subplot(nrows = 1, ncols = 1)
+
+sns.lineplot(x=&#39;day&#39;, y=  &#39;1997&#39;, data=sst)
+plt.show()</code></pre>
+<p><img src="/post/2019-12-22-make-use-both-of-r-and-python-languages-for-efficient-data-science_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<pre class="r"><code>reticulate::py$sst %&gt;% as_tibble()</code></pre>
+<pre><code>## # A tibble: 366 x 22
+##    day                 `1997` `1998` `1999` `2000` `2001` `2002` `2003` `2004`
+##    &lt;dttm&gt;               &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+##  1 1997-01-01 00:00:00   27.8   29.8   29.1   28.3   28.7   28.3    NaN   28.4
+##  2 1997-01-02 00:00:00   27.9   29.7   29.2   28.3   28.5   28.4    NaN   28.5
+##  3 1997-01-03 00:00:00   27.9   29.5   29.1   28.4   28.5   28.3    NaN   28.5
+##  4 1997-01-04 00:00:00   28.0   29.2   29.0   28.6   28.5   28.4    NaN   28.7
+##  5 1997-01-05 00:00:00   28.1   28.8   29.0   28.8   28.7   28.6    NaN   28.7
+##  6 1997-01-06 00:00:00   28.1   28.7   29.0   28.8   28.6   28.6    NaN   28.8
+##  7 1997-01-07 00:00:00   28.1   29.1   29.0   28.8   28.4   28.5    NaN   28.7
+##  8 1997-01-08 00:00:00   28.2   29.0   29.0   28.8   28.4   28.0    NaN   28.4
+##  9 1997-01-09 00:00:00   28.2   29.0   29.0   28.9   28.3   28.4    NaN   28.1
+## 10 1997-01-10 00:00:00   28.2   29.1   28.8   28.9   28.3   28.4    NaN   28.3
+## # ... with 356 more rows, and 13 more variables: `2005` &lt;dbl&gt;, `2006` &lt;dbl&gt;,
+## #   `2007` &lt;dbl&gt;, `2008` &lt;dbl&gt;, `2009` &lt;dbl&gt;, `2010` &lt;dbl&gt;, `2011` &lt;dbl&gt;,
+## #   `2012` &lt;dbl&gt;, `2013` &lt;dbl&gt;, `2014` &lt;dbl&gt;, `2015` &lt;dbl&gt;, `2016` &lt;dbl&gt;,
+## #   `2017` &lt;dbl&gt;</code></pre>
+<div id="python-pandas-and-time" class="section level2">
+<h2>Python, Pandas and Time</h2>
+<p>A time series is a series of data points, which are listed (or indexed) in time order. Usually, a time series is a sequence of values, which are equally spaced points in time. Everything which consists of measured data connected with the corresponding time can be seen as a time series. Measurements can be taken irregularly, but in most cases time series consist of fixed frequencies. This means that data is measured or taken in a regular pattern, i.e. for example every 5 milliseconds, every 10 seconds, or very hour. Often time series are plotted as line charts.</p>
+<p>In this post of our tutorial on Python with Pandas, we introduce the tools from Pandas dealing with time series. You will learn how to cope with large time series and how modify time series.</p>
+<p>Before you continue reading it might be useful to go through our tutorial on the standard Python modules dealing with time processing, i.e. datetime, time and calendar:</p>
+<pre class="python"><code>import numpy as np
+import pandas as pd
+from datetime import datetime, timedelta as delta</code></pre>
+</div>
+<div id="create-date-ranges" class="section level2">
+<h2>create Date Ranges</h2>
+<p>The <code>date_range</code> function of the pandas library can be used to generate a `DatetimeIndex;</p>
+<pre class="python"><code>index = pd.date_range(&#39;12/24/1970&#39;, &#39;01/03/1971&#39;)
+index</code></pre>
+<pre><code>## DatetimeIndex([&#39;1970-12-24&#39;, &#39;1970-12-25&#39;, &#39;1970-12-26&#39;, &#39;1970-12-27&#39;,
+##                &#39;1970-12-28&#39;, &#39;1970-12-29&#39;, &#39;1970-12-30&#39;, &#39;1970-12-31&#39;,
+##                &#39;1971-01-01&#39;, &#39;1971-01-02&#39;, &#39;1971-01-03&#39;],
+##               dtype=&#39;datetime64[ns]&#39;, freq=&#39;D&#39;)</code></pre>
+<p>We have passed a start and an end date to <code>date_range</code>in our previous example. It is also possible to pass only a start or an end date to the function. In this case, we have to determine the number of periods to generate by setting the keyword parameter ‘periods’:</p>
+<pre class="python"><code>index = pd.date_range(&#39;01/01/2018&#39;,periods=365)
+index</code></pre>
+<pre><code>## DatetimeIndex([&#39;2018-01-01&#39;, &#39;2018-01-02&#39;, &#39;2018-01-03&#39;, &#39;2018-01-04&#39;,
+##                &#39;2018-01-05&#39;, &#39;2018-01-06&#39;, &#39;2018-01-07&#39;, &#39;2018-01-08&#39;,
+##                &#39;2018-01-09&#39;, &#39;2018-01-10&#39;,
+##                ...
+##                &#39;2018-12-22&#39;, &#39;2018-12-23&#39;, &#39;2018-12-24&#39;, &#39;2018-12-25&#39;,
+##                &#39;2018-12-26&#39;, &#39;2018-12-27&#39;, &#39;2018-12-28&#39;, &#39;2018-12-29&#39;,
+##                &#39;2018-12-30&#39;, &#39;2018-12-31&#39;],
+##               dtype=&#39;datetime64[ns]&#39;, length=365, freq=&#39;D&#39;)</code></pre>
+<p>we create a time frequency which contains the month ends between two dates. We can see that the year 2016 contained the 29th of February, because it was a leap year:</p>
+<pre class="python"><code>index = pd.date_range(&#39;01/01/2016&#39;,&#39;01/01/2018&#39;, freq=&quot;M&quot;)
+index</code></pre>
+<pre><code>## DatetimeIndex([&#39;2016-01-31&#39;, &#39;2016-02-29&#39;, &#39;2016-03-31&#39;, &#39;2016-04-30&#39;,
+##                &#39;2016-05-31&#39;, &#39;2016-06-30&#39;, &#39;2016-07-31&#39;, &#39;2016-08-31&#39;,
+##                &#39;2016-09-30&#39;, &#39;2016-10-31&#39;, &#39;2016-11-30&#39;, &#39;2016-12-31&#39;,
+##                &#39;2017-01-31&#39;, &#39;2017-02-28&#39;, &#39;2017-03-31&#39;, &#39;2017-04-30&#39;,
+##                &#39;2017-05-31&#39;, &#39;2017-06-30&#39;, &#39;2017-07-31&#39;, &#39;2017-08-31&#39;,
+##                &#39;2017-09-30&#39;, &#39;2017-10-31&#39;, &#39;2017-11-30&#39;, &#39;2017-12-31&#39;],
+##               dtype=&#39;datetime64[ns]&#39;, freq=&#39;M&#39;)</code></pre>
+</div>
+<div id="time-series-in-pandas-and-python" class="section level2">
+<h2>Time Series in Pandas and Python</h2>
+<p>We could define a Pandas Series, which is built with an index consisting of time stamps.</p>
+<pre class="python"><code>
+dates = pd.date_range(&#39;2018-02-25&#39;, &#39;2018-12-02&#39;, freq=&quot;M&quot;)
+
+values = [25, 50, 15, 67, 70, 9, 28, 30, 32, 12]
+
+ts = pd.Series(values, index=dates)</code></pre>
+<p>Let’s check the type of the newly created time series:</p>
+<pre class="python"><code>type(ts)</code></pre>
+<pre><code>## &lt;class &#39;pandas.core.series.Series&#39;&gt;</code></pre>
+<p>What does the index of a time series look like? Let’s see:</p>
+<pre class="python"><code>ts.index</code></pre>
+<pre><code>## DatetimeIndex([&#39;2018-02-28&#39;, &#39;2018-03-31&#39;, &#39;2018-04-30&#39;, &#39;2018-05-31&#39;,
+##                &#39;2018-06-30&#39;, &#39;2018-07-31&#39;, &#39;2018-08-31&#39;, &#39;2018-09-30&#39;,
+##                &#39;2018-10-31&#39;, &#39;2018-11-30&#39;],
+##               dtype=&#39;datetime64[ns]&#39;, freq=&#39;M&#39;)</code></pre>
+<p>We will create now another time series:</p>
+<pre class="python"><code>values2 = [32, 54, 18, 61, 72, 19, 21, 33, 29, 17]
+
+ts2 = pd.Series(values2, index=dates)</code></pre>
+<p>It is possible to use arithmetic operations on time series like we did with other series. We can for example add the two previously created time series:</p>
+<pre class="python"><code>ts + ts2</code></pre>
+<pre><code>## 2018-02-28     57
+## 2018-03-31    104
+## 2018-04-30     33
+## 2018-05-31    128
+## 2018-06-30    142
+## 2018-07-31     28
+## 2018-08-31     49
+## 2018-09-30     63
+## 2018-10-31     61
+## 2018-11-30     29
+## Freq: M, dtype: int64</code></pre>
+<p>Arithmetic mean between both Series, i.e. the values of the series:</p>
+<pre class="python"><code>(ts + ts2) /2</code></pre>
+<pre><code>## 2018-02-28    28.5
+## 2018-03-31    52.0
+## 2018-04-30    16.5
+## 2018-05-31    64.0
+## 2018-06-30    71.0
+## 2018-07-31    14.0
+## 2018-08-31    24.5
+## 2018-09-30    31.5
+## 2018-10-31    30.5
+## 2018-11-30    14.5
+## Freq: M, dtype: float64</code></pre>
+<pre class="python"><code>ts_df =pd.DataFrame(ts2, index=dates, columns={&quot;Temperature&quot;})
+
+fig, axes = plt.subplots(nrows=1, ncols=1)
+plt.plot(ts_df.index, ts_df.Temperature)
+plt.ylabel(&quot;Temperature&quot;)
+# plt.xticks(ticks=[])
+plt.show()</code></pre>
+<p><img src="/post/2019-12-22-make-use-both-of-r-and-python-languages-for-efficient-data-science_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<pre class="python"><code>
+fig, axes = plt.subplots(nrows=1, ncols=1)
+
+sns.lineplot(x=ts_df.index, 
+    y=ts_df.Temperature)
+plt.show()</code></pre>
+<p><img src="/post/2019-12-22-make-use-both-of-r-and-python-languages-for-efficient-data-science_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<pre class="python"><code>sst = pd.read_excel(&quot;c:/Users/Semba/Documents/kuguru.xlsx&quot;)
+
+sst.columns;sst.tail()</code></pre>
+<pre><code>## Index([&#39;chl&#39;, &#39;sst&#39;, &#39;time&#39;, &#39;month&#39;, &#39;year&#39;], dtype=&#39;object&#39;)
+##        chl     sst       time  month  year
+## 145  0.217  25.398 2014-08-01      8  2014
+## 146  0.202  25.608 2014-09-01      9  2014
+## 147  0.157  26.395 2014-10-01     10  2014
+## 148  0.108  28.037 2014-11-01     11  2014
+## 149  0.087  29.215 2014-12-01     12  2014</code></pre>
+<pre class="python"><code>ax = sst.plot(x = &quot;time&quot;, y = &quot;chl&quot;, legend = False)
+ax2 = ax.twinx()
+sst.plot(x = &quot;time&quot;, y = &quot;sst&quot;, legned = False, color = &quot;r&quot;)
+ax.figure.legend()
+plt.show()</code></pre>
+<pre class="python"><code>df = pd.DataFrame({&quot;date&quot;: [&quot;2018-01-01&quot;, &quot;2018-01-02&quot;, &quot;2018-01-03&quot;, &quot;2018-01-04&quot;],
+                   &quot;column1&quot;: [555,525,532,585], 
+                   &quot;column2&quot;: [50,48,49,51]})
+
+ax = df.plot(x=&quot;date&quot;, y=&quot;column1&quot;, legend=False)
+ax2 = ax.twinx()
+df.plot(x=&quot;date&quot;, y=&quot;column2&quot;, ax=ax2, legend=False, color=&quot;r&quot;)
+ax.figure.legend()
+plt.show()</code></pre>
+<p><img src="/post/2019-12-22-make-use-both-of-r-and-python-languages-for-efficient-data-science_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<pre class="python"><code>sns.lineplot(x=sst.time, y=sst.chl)
+plt.show()</code></pre>
+<p><img src="/post/2019-12-22-make-use-both-of-r-and-python-languages-for-efficient-data-science_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<p>We are interested with how temperature and chlorophyll vary over months. we use the <code>groupby</code> function from pandas to split the months, apply, and combine values by computing the median values</p>
+<pre class="python"><code>sst_month = sst[{&#39;chl&#39;, &#39;sst&#39;, &#39;month&#39;}].groupby(&quot;month&quot;).median()
+fig, axes = plt.subplots(nrows=1, ncols=1)
+
+ax =  sns.lineplot(x=sst_month.index, y=sst_month.sst, color =&#39;red&#39;, legend=False)
+ax2 = ax.twinx()
+sns.lineplot(x=sst_month.index, y=sst_month.chl, ax = ax2, color = &quot;blue&quot;, legend=False)
+plt.ylabel(&quot;Chlorophyll&quot;)
+# ax.figure.legend()
+plt.show()</code></pre>
+<p><img src="/post/2019-12-22-make-use-both-of-r-and-python-languages-for-efficient-data-science_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<pre class="r"><code>py$sst_month %&gt;% as_tibble() %&gt;% mutate(months = 1:12) %&gt;% pivot_longer(cols = 1:2, names_to = &quot;variable&quot;) %&gt;% ungroup() %&gt;% ggplot() + geom_path(aes(x = months, y = value))+facet_wrap(~variable, scales = &quot;free_y&quot;)+
+  scale_x_continuous(breaks = 1:12, labels = seq(lubridate::dmy(&quot;010119&quot;), lubridate::dmy(&quot;311219&quot;), by = &quot;month&quot;) %&gt;% lubridate::month(label = TRUE, abbr = TRUE))</code></pre>
+<p><img src="/post/2019-12-22-make-use-both-of-r-and-python-languages-for-efficient-data-science_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<pre class="python"><code>
+sns.set()
+sns.set_context(&#39;talk&#39;)
+
+sst_year = sst[{&#39;chl&#39;, &#39;sst&#39;, &#39;year&#39;}].groupby(&quot;year&quot;).median()
+fig, axes = plt.subplots(nrows=1, ncols=1)
+
+ax =  sns.lineplot(x=sst_year.index, y=sst_year.sst, color =&#39;red&#39;, legend=False)
+ax2 = ax.twinx()
+sns.lineplot(x=sst_year.index, y=sst_year.chl, ax = ax2, color = &quot;blue&quot;, legend=False)
+plt.ylabel(&quot;Chlorophyll&quot;)
+# ax.figure.legend()
+plt.show()</code></pre>
+<p><img src="/post/2019-12-22-make-use-both-of-r-and-python-languages-for-efficient-data-science_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<pre class="python"><code>fig, axes = plt.subplots(nrows=1, ncols=1)
+
+data = np.random.rand(40, 60)
+sns.heatmap(data=data)
+plt.show()</code></pre>
+<p><img src="/post/2019-12-22-make-use-both-of-r-and-python-languages-for-efficient-data-science_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+</div>
+<div id="heatmaps-with-seaborn-module" class="section level2">
+<h2>heatmaps with seaborn module</h2>
+<pre class="python"><code>chl_mafia = pd.read_csv(&quot;e:/Data Manipulation/rpy/chl_mafia.csv&quot;)</code></pre>
+<pre class="python"><code>chl_mafia_data = pd.pivot_table(data=chl_mafia, values=&quot;chl&quot;, index=&#39;lat&#39;, columns=&#39;lon&#39;)
+fig, axes = plt.subplots(nrows=1, ncols=1)
+
+sns.heatmap(data=chl_mafia_data, cmap = &quot;jet&quot;, xticklabels=False, yticklabels=False)
+plt.gca().invert_yaxis()
+plt.xlabel([39.4,39.6,39.8,40.0])
+plt.show()</code></pre>
+<p><img src="/post/2019-12-22-make-use-both-of-r-and-python-languages-for-efficient-data-science_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+<pre class="r"><code>py$chl_mafia %&gt;% as_tibble() %&gt;% ggplot() +
+  geom_raster(aes(x = lon, y = lat, fill = chl))+
+  scale_fill_gradientn(colours = oce::oce.colors9A(120))</code></pre>
+<p><img src="/post/2019-12-22-make-use-both-of-r-and-python-languages-for-efficient-data-science_files/figure-html/unnamed-chunk-31-1.png" width="672" />
+abcdefghijklmnpqrstuvwxyz</p>
+</div>

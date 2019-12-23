@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>R Markdown on pinab</title>
+    <link>/tags/r-markdown/</link>
+    <description>Recent content in R Markdown on pinab</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 22 Dec 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/r-markdown/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Make use both of R and Python languages for efficient data science</title>
+      <link>/post/make-use-both-of-r-and-python-languages-for-efficient-data-science/</link>
+      <pubDate>Sun, 22 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/make-use-both-of-r-and-python-languages-for-efficient-data-science/</guid>
+      <description>dlab organized the second Data Tamasha from 4 to 6 December, 2019, that provide an opportunity to company, goverment organization, students and non-govermental organizationto showcase some of the ground–breaking solution in this digital age era.</description>
+    </item>
+    
+  </channel>
+</rss>

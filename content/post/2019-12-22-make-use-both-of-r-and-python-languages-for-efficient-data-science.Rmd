@@ -1,0 +1,275 @@
+---
+title: Make use both of R and Python languages for efficient data science
+image: "/images/post/dlab.png"
+author: Masumbuko Semba
+date: '2019-12-22'
+slug: make-use-both-of-r-and-python-languages-for-efficient-data-science
+categories: []
+tags:
+  - Python
+  - R
+  - R Markdown
+  - data science
+---
+
+
+[dlab](https://datatamasha.dlab.or.tz/) organized the second Data Tamasha from 4 to 6 December,  2019, that provide an opportunity to company, goverment organization, students and non-govermental organizationto showcase some of the ground--breaking solution in this digital age era. One of the key points from this Tamasha was the use of data science languages as tools in a toolkit. R, Python… Use them both. Leverage their strengths. Don’t build an “R Shop” or a “Python Shop”. Build a High Performance Data Science Team that capitalizes on the unique strengths of both languages.
+
+When you use multiple languages, you gain the ability to select the best tool for the job. The result is a language harmony that increases the data science team’s efficiency, capability, and productivity. The general idea is to be as flexible as possible so we can leverage the best of both languages within our full-stack data science workflow, which includes:
+
++ Efficiently exploring data
++ Modeling, Cross Validating, and Evaluating Model Quality
++ Communicating data science to make better decisions via traditional reports (Word, PowerPoint, Excel, PDF), web-based reports (HTML), and interactive web-applications (Shiny, Django)
++ We can make a slight modification to the R and Python Strengths visualization to organize it in a logical sequence that leverages the strengths:
++ R is selected for exploration because of the tidyverse readability and efficiency
++ Python is selected for machine learning because of Scikit Learn machine learning pipeline capability
++ R is selected for communication because of the advanced reporting utilities including RMarkdown and Shiny (interactive web apps) and the wonderful ggplot2 visualization package
+
+The **reticulate** package includes a Python engine for R Markdown that enables easy interoperabilty between Python and R---the two widely used programming languages for data science. We first load the package in R chunk
+
+```{r}
+require(reticulate)
+require(tidyverse)
+```
+
+By default, reticulate package use the version of Python found on your PC PATH. However, if you have more than one version of Python installed in your machine, you can use the `use_python` function to use an alternative version.
+```{r}
+use_python("c:/Python/Anaconda3/")
+```
+
+For use to call the Python libraries, we need to call them from the Python Chunk and not R chunk. Python chunk all execute within a single Python session to have access to all objects created in previous chunk. Like the R chunk, all chunk options works in similar manner in Python chunk. To access python function, we first have to import their corresponding libraries.
+
+```{python}
+
+import pandas as pd
+
+```
+
+
+We use the `read_excel()` function from pandas library to import the file from the PC to R session
+
+```{python}
+
+sst = pd.read_excel("E:/Data Manipulation/Temperature data/processing/Chumbe_SST_Temperature 1997-30Nov2017_IMS_Muhando.xlsx")
+```
+
+```{python}
+sst
+```
+
+```{python}
+import seaborn as sns
+import matplotlib.pyplot as plt
+```
+
+```{python}
+# fig, axes = plt.subplots(nrows=1, ncols=1)
+
+# fig, axes = plt.subplot(nrows = 1, ncols = 1)
+
+sns.lineplot(x='day', y=  '1997', data=sst)
+plt.show()
+```
+
+```{r}
+reticulate::py$sst %>% as_tibble()
+```
+
+## Python, Pandas and Time
+A time series is a series of data points, which are listed (or indexed) in time order. Usually, a time series is a sequence of values, which are equally spaced points in time. Everything which consists of measured data connected with the corresponding time can be seen as a time series. Measurements can be taken irregularly, but in most cases time series consist of fixed frequencies. This means that data is measured or taken in a regular pattern, i.e. for example every 5 milliseconds, every 10 seconds, or very hour. Often time series are plotted as line charts.
+
+In this post of our tutorial on Python with Pandas, we introduce the tools from Pandas dealing with time series. You will learn how to cope with large time series and how modify time series.
+
+Before you continue reading it might be useful to go through our tutorial on the standard Python modules dealing with time processing, i.e. datetime, time and calendar:
+```{python}
+import numpy as np
+import pandas as pd
+from datetime import datetime, timedelta as delta
+```
+
+## create Date Ranges
+The `date_range` function of the pandas library can be used to generate a `DatetimeIndex;
+```{python}
+index = pd.date_range('12/24/1970', '01/03/1971')
+index
+```
+
+We have passed a start and an end date to `date_range `in our previous example. It is also possible to pass only a start or an end date to the function. In this case, we have to determine the number of periods to generate by setting the keyword parameter 'periods':
+```{python}
+index = pd.date_range('01/01/2018',periods=365)
+index
+```
+
+we create a time frequency which contains the month ends between two dates. We can see that the year 2016 contained the 29th of February, because it was a leap year:
+```{python}
+index = pd.date_range('01/01/2016','01/01/2018', freq="M")
+index
+```
+
+
+## Time Series in Pandas and Python
+
+We could define a Pandas Series, which is built with an index consisting of time stamps.
+```{python}
+
+dates = pd.date_range('2018-02-25', '2018-12-02', freq="M")
+
+values = [25, 50, 15, 67, 70, 9, 28, 30, 32, 12]
+
+ts = pd.Series(values, index=dates)
+
+```
+
+Let's check the type of the newly created time series:
+```{python}
+type(ts)
+
+```
+
+What does the index of a time series look like? Let's see:
+
+```{python}
+ts.index
+```
+
+We will create now another time series:
+
+```{python}
+values2 = [32, 54, 18, 61, 72, 19, 21, 33, 29, 17]
+
+ts2 = pd.Series(values2, index=dates)
+```
+
+It is possible to use arithmetic operations on time series like we did with other series. We can for example add the two previously created time series:
+
+```{python}
+ts + ts2
+```
+
+Arithmetic mean between both Series, i.e. the values of the series:
+
+```{python}
+(ts + ts2) /2
+```
+
+```{python}
+ts_df =pd.DataFrame(ts2, index=dates, columns={"Temperature"})
+
+fig, axes = plt.subplots(nrows=1, ncols=1)
+plt.plot(ts_df.index, ts_df.Temperature)
+plt.ylabel("Temperature")
+# plt.xticks(ticks=[])
+plt.show()
+```
+
+
+```{python}
+
+fig, axes = plt.subplots(nrows=1, ncols=1)
+
+sns.lineplot(x=ts_df.index, 
+    y=ts_df.Temperature)
+plt.show()
+```
+
+```{python}
+sst = pd.read_excel("c:/Users/Semba/Documents/kuguru.xlsx")
+
+sst.columns;sst.tail()
+```
+
+```{python, eval = F}
+ax = sst.plot(x = "time", y = "chl", legend = False)
+ax2 = ax.twinx()
+sst.plot(x = "time", y = "sst", legned = False, color = "r")
+ax.figure.legend()
+plt.show()
+```
+
+```{python}
+df = pd.DataFrame({"date": ["2018-01-01", "2018-01-02", "2018-01-03", "2018-01-04"],
+                   "column1": [555,525,532,585], 
+                   "column2": [50,48,49,51]})
+
+ax = df.plot(x="date", y="column1", legend=False)
+ax2 = ax.twinx()
+df.plot(x="date", y="column2", ax=ax2, legend=False, color="r")
+ax.figure.legend()
+plt.show()
+```
+
+
+```{python}
+sns.lineplot(x=sst.time, y=sst.chl)
+plt.show()
+```
+
+We are interested with how temperature and chlorophyll vary over months. we use the `groupby` function from pandas to split the months, apply, and combine values by computing the median values
+```{python}
+sst_month = sst[{'chl', 'sst', 'month'}].groupby("month").median()
+fig, axes = plt.subplots(nrows=1, ncols=1)
+
+ax =  sns.lineplot(x=sst_month.index, y=sst_month.sst, color ='red', legend=False)
+ax2 = ax.twinx()
+sns.lineplot(x=sst_month.index, y=sst_month.chl, ax = ax2, color = "blue", legend=False)
+plt.ylabel("Chlorophyll")
+# ax.figure.legend()
+plt.show()
+```
+
+```{r}
+py$sst_month %>% as_tibble() %>% mutate(months = 1:12) %>% pivot_longer(cols = 1:2, names_to = "variable") %>% ungroup() %>% ggplot() + geom_path(aes(x = months, y = value))+facet_wrap(~variable, scales = "free_y")+
+  scale_x_continuous(breaks = 1:12, labels = seq(lubridate::dmy("010119"), lubridate::dmy("311219"), by = "month") %>% lubridate::month(label = TRUE, abbr = TRUE))
+```
+
+```{python}
+
+sns.set()
+sns.set_context('talk')
+
+sst_year = sst[{'chl', 'sst', 'year'}].groupby("year").median()
+fig, axes = plt.subplots(nrows=1, ncols=1)
+
+ax =  sns.lineplot(x=sst_year.index, y=sst_year.sst, color ='red', legend=False)
+ax2 = ax.twinx()
+sns.lineplot(x=sst_year.index, y=sst_year.chl, ax = ax2, color = "blue", legend=False)
+plt.ylabel("Chlorophyll")
+# ax.figure.legend()
+plt.show()
+```
+
+
+```{python}
+fig, axes = plt.subplots(nrows=1, ncols=1)
+
+data = np.random.rand(40, 60)
+sns.heatmap(data=data)
+plt.show()
+
+```
+
+## heatmaps with seaborn module
+
+```{python}
+chl_mafia = pd.read_csv("e:/Data Manipulation/rpy/chl_mafia.csv")
+```
+
+```{python}
+chl_mafia_data = pd.pivot_table(data=chl_mafia, values="chl", index='lat', columns='lon')
+fig, axes = plt.subplots(nrows=1, ncols=1)
+
+sns.heatmap(data=chl_mafia_data, cmap = "jet", xticklabels=False, yticklabels=False)
+plt.gca().invert_yaxis()
+plt.xlabel([39.4,39.6,39.8,40.0])
+plt.show()
+```
+
+
+```{r}
+
+py$chl_mafia %>% as_tibble() %>% ggplot() +
+  geom_raster(aes(x = lon, y = lat, fill = chl))+
+  scale_fill_gradientn(colours = oce::oce.colors9A(120))
+
+```
+abcdefghijklmnpqrstuvwxyz

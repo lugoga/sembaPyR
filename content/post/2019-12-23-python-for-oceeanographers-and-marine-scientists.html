@@ -1,0 +1,213 @@
+---
+title: Python for Oceeanographers and Marine Scientists
+image: "/images/post/dlab.png"
+author: Masumbuko Semba
+date: '2019-12-23'
+slug: python-for-oceeanographers-and-marine-scientists
+categories: []
+tags:
+  - Ocenography
+  - marine
+  - science
+  - data science
+  - Masumbuko Semba
+  - Masumbuko
+  - Semba
+---
+
+
+
+<p>During the last couple of decades, Matlab has been the most commonly-used scripting language in physical oceanography, and it has a large user base in many other fields— however, Python has been gaining ground, often being adopted by former Matlab users as well as by newcomers. Here is a little background to help you understand this shift, and why we advocate using Python from the start.</p>
+<p>Python was designed by a computer scientist as a general–purpose scripting language for easy adoption and widespread use. People tried it and liked it, and the result is that it is widely used throughout the software world, for all sorts of tasks, large and small. There is a vast array of Python packages that are freely available to do all sorts of things—including the sorts of things that oceanographers and other scientists do; but these packages are not neatly bound up in a single product, and the documentation for the language itself and for the packages is similarly scattered and of varying quality.</p>
+<p>Why use Python instead of Matlab?
+Python is fundamentally a better computer language in many ways.</p>
+<ol style="list-style-type: lower-roman">
+<li>It is suitable for a wider variety of tasks.</li>
+<li>It scales better from the shortest of scripts to large software projects.</li>
+<li>It facilitates writing clearer and more concise code.</li>
+<li>With associated tools, it makes for easier access to existing high-performance codes in compiled languages, and for using smaller pieces of compiled code to speed up critical sections.</li>
+<li>Because Python is Free and Open Source Software (FOSS), you can install it on any machine without having to deal with a license manager.</li>
+<li>For the same reason, Python code that is part of a research project can be run by anyone, anywhere, to verify or extend the results.</li>
+<li>Most Python packages you are likely to want to use are developed in an open environment. The scientific Python ecosystem is dynamic and friendly.</li>
+</ol>
+<p>What are the potential disadvantages?</p>
+<ol style="list-style-type: lower-roman">
+<li>Installation of all the packages one needs can take time and expertise; but distributions like Anaconda, combined with other improvements in python packaging software and repositories, are rapidly solving this problem.</li>
+<li>Although progress is being made, the scientific Python stack is not as uniformly well-documented as Matlab; it might take longer to figure out how to do something in Python. You might also find that a routine available in Matlab is not yet available in a Python package.</li>
+<li>Matlab is still mainstream in oceanography–at least among many of the old guard; with Python, you are an early adopter. (If you have a spirit of adventure, this might be considered an advantage.)</li>
+</ol>
+<p>What about R?
+The R language (and its commercial counterpart, S) is specialized for statistical calculations and plots. It is widely used in the social sciences but it is less suitable than Python for general computing in oceanography. If one has a need for some of its statistical capabilities, they can be accessed from Python using the interface module, Rpy2.</p>
+<pre class="r"><code>require(reticulate)</code></pre>
+<pre><code>## Loading required package: reticulate</code></pre>
+<pre class="r"><code>use_python(&quot;c:/Python/Anaconda3/&quot;)</code></pre>
+<pre class="python"><code>import netCDF4 as nc
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import seaborn as sns
+# from mpl_toolkits.basemap import Basemap</code></pre>
+<pre class="python"><code>sst = nc.Dataset(&quot;e:/MatlabWorking/GHRSST/20150101.nc&quot;)</code></pre>
+<pre class="python"><code>sst.variables</code></pre>
+<pre><code>## {&#39;lat&#39;: &lt;class &#39;netCDF4._netCDF4.Variable&#39;&gt;
+## float32 lat(lat)
+##     long_name: latitude
+##     standard_name: latitude
+##     axis: Y
+##     units: degrees_north
+##     comment: uniform grid from -89.875 to 89.875 by 0.25
+## unlimited dimensions: 
+## current shape = (720,)
+## filling on, default _FillValue of 9.969209968386869e+36 used, &#39;lon&#39;: &lt;class &#39;netCDF4._netCDF4.Variable&#39;&gt;
+## float32 lon(lon)
+##     long_name: longitude
+##     standard_name: longitude
+##     axis: X
+##     units: degrees_east
+##     comment: uniform grid from -179.875 to 179.875 by 0.25
+## unlimited dimensions: 
+## current shape = (1440,)
+## filling on, default _FillValue of 9.969209968386869e+36 used, &#39;time&#39;: &lt;class &#39;netCDF4._netCDF4.Variable&#39;&gt;
+## int32 time(time)
+##     long_name: reference time of sst field
+##     standard_name: time
+##     axis: T
+##     units: seconds since 1981-01-01 00:00:00
+## unlimited dimensions: 
+## current shape = (1,)
+## filling on, default _FillValue of -2147483647 used, &#39;analysed_sst&#39;: &lt;class &#39;netCDF4._netCDF4.Variable&#39;&gt;
+## int16 analysed_sst(time, lat, lon)
+##     long_name: analysed sea surface temperature
+##     standard_name: sea_surface_temperature
+##     type: foundation
+##     units: kelvin
+##     _FillValue: -32768
+##     add_offset: 273.15
+##     scale_factor: 0.01
+##     valid_min: -300
+##     valid_max: 4500
+## unlimited dimensions: 
+## current shape = (1, 720, 1440)
+## filling on, &#39;analysis_error&#39;: &lt;class &#39;netCDF4._netCDF4.Variable&#39;&gt;
+## int16 analysis_error(time, lat, lon)
+##     long_name: estimated error standard deviation of analysed_sst
+##     units: kelvin
+##     _FillValue: -32768
+##     add_offset: 0.0
+##     scale_factor: 0.01
+##     valid_min: 0
+##     valid_max: 127
+## unlimited dimensions: 
+## current shape = (1, 720, 1440)
+## filling on, &#39;mask&#39;: &lt;class &#39;netCDF4._netCDF4.Variable&#39;&gt;
+## int8 mask(time, lat, lon)
+##     long_name: sea/land field composite mask
+##     _FillValue: -128
+##     flag_values: 1
+##     flag_meanings: sea land lake ice
+##     comment: b0:1=grid cell is open sea water b1:1=land is present in this grid cell b2:1=lake surface is present in this grid cell b3:1=sea ice is present in this grid cell b4-b7:reserve for future grid mask data
+## unlimited dimensions: 
+## current shape = (1, 720, 1440)
+## filling on, &#39;sea_ice_fraction&#39;: &lt;class &#39;netCDF4._netCDF4.Variable&#39;&gt;
+## int8 sea_ice_fraction(time, lat, lon)
+##     long_name: sea ice area fraction
+##     standard_name: sea ice area fraction
+##     units: percent
+##     _FillValue: -128
+##     add_offset: 0.0
+##     scale_factor: 0.01
+##     valid_min: 0
+##     valid_max: 100
+## unlimited dimensions: 
+## current shape = (1, 720, 1440)
+## filling on}</code></pre>
+<pre class="python"><code>time = sst.variables[&#39;time&#39;]
+lon = sst.variables[&#39;lon&#39;]
+lat = sst.variables[&#39;lat&#39;]
+data = sst.variables[&#39;analysed_sst&#39;]</code></pre>
+<pre class="python"><code>data.dimensions</code></pre>
+<pre><code>## (&#39;time&#39;, &#39;lat&#39;, &#39;lon&#39;)</code></pre>
+<pre class="python"><code>fig, axes = plt.subplots(nrows=1, ncols=1)
+plt.imshow(data[0,:,:]-273,)
+plt.colorbar()</code></pre>
+<pre><code>## &lt;matplotlib.colorbar.Colorbar object at 0x0000000027C68F88&gt;</code></pre>
+<pre class="python"><code>plt.show()</code></pre>
+<p><img src="/post/2019-12-23-python-for-oceeanographers-and-marine-scientists_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>We noticed that the data is flipped upside down. we need to correct and map it in the correct orientation. we use <code>np.flipud</code> function from numpy module for correcting the orientation</p>
+<pre class="python"><code>
+datar = np.flipud(data[0,:,:]-273)
+
+fig, axes = plt.subplots(nrows=1, ncols=1)
+plt.imshow(datar, cmap = &quot;jet&quot;)
+plt.colorbar()</code></pre>
+<pre><code>## &lt;matplotlib.colorbar.Colorbar object at 0x000000002BF3ADC8&gt;</code></pre>
+<pre class="python"><code>plt.clim(5,30)
+plt.show()</code></pre>
+<p><img src="/post/2019-12-23-python-for-oceeanographers-and-marine-scientists_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<pre class="python"><code># import dependencies
+import os
+os.environ[&#39;PROJ_LIB&#39;] = &#39;C:/Python/Anaconda3/Lib/site-packages/mpl_toolkits/basemap&#39;
+# note that Basemap will be supported until 2020 only
+from mpl_toolkits.basemap import Basemap
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+# make sure to set your plot size before you start rendering to screen
+plt.figure(figsize=(8, 8))
+# by default, only crude and low resolutions are installed, if you wanted
+# higher fidelity images, refer to the documentation.
+default_map = Basemap(projection=&#39;ortho&#39;, lat_0=45, lon_0=-105,
+                     resolution=&#39;l&#39;, area_thresh=1000.0)
+default_map.drawcoastlines()
+default_map.drawcountries() 
+# matplotlib provides color creation 
+default_map.fillcontinents(color=&#39;navajowhite&#39;)
+default_map.drawmapboundary()
+plt.show()</code></pre>
+<p>read data from local file as pandas data frame and print the five records</p>
+<pre class="python"><code>
+## 
+scot = pd.read_csv(&quot;e:/Data Manipulation/rpy/scottish_hills.csv&quot;)
+scot.head()</code></pre>
+<pre><code>##                     Hill Name  Height   Latitude  Longitude    Osgrid
+## 0       A&#39; Bhuidheanach Bheag   936.0  56.870342  -4.199001  NN660775
+## 1               A&#39; Chailleach   997.0  57.693800  -5.128715  NH136714
+## 2               A&#39; Chailleach   929.2  57.109564  -4.179285  NH681041
+## 3  A&#39; Chraileag (A&#39; Chralaig)  1120.0  57.184186  -5.154837  NH094147
+## 4             A&#39; Ghlas-bheinn   918.0  57.255090  -5.303687  NH008231</code></pre>
+<p>Because of the error we experience in mapping with the <code>basemap</code> package, I will switch to an aternate module called <code>cartopy</code>. Unfortunately, Cartopy is not installed with Anaconda and you need to install it in your machine. The easiest way to install Cartopy on your own computer is with the package manager conda which you can access by typing into a terminal:</p>
+<pre class="python"><code>conda install -c conda-forge cartopy</code></pre>
+<p>Then you can load the modules in the session</p>
+<pre class="python"><code>
+import cartopy.crs as ccrs
+from cartopy.mpl.ticker import LongitudeFormatter, LatitudeFormatter
+import cartopy.feature as cfeature</code></pre>
+<p>Then the chunk below</p>
+<pre class="python"><code>
+plt.figure(figsize=(2.5,2.5))
+ax = plt.axes(projection=ccrs.Mercator())
+ax.coastlines(&#39;10m&#39;)
+
+ax.xaxis.set_visible(True)
+ax.yaxis.set_visible(True)
+
+ax.set_yticks([56,57,58,59], crs=ccrs.PlateCarree())</code></pre>
+<pre><code>## [&lt;matplotlib.axis.YTick object at 0x000000002D2A5B48&gt;, &lt;matplotlib.axis.YTick object at 0x000000002D2A0E08&gt;, &lt;matplotlib.axis.YTick object at 0x000000002D28C048&gt;, &lt;matplotlib.axis.YTick object at 0x000000002D2D6208&gt;]</code></pre>
+<pre class="python"><code>ax.set_xticks([-8, -6, -4, -2], crs=ccrs.PlateCarree())</code></pre>
+<pre><code>## [&lt;matplotlib.axis.XTick object at 0x000000002D2A0288&gt;, &lt;matplotlib.axis.XTick object at 0x000000002D28C648&gt;, &lt;matplotlib.axis.XTick object at 0x000000002D28C148&gt;, &lt;matplotlib.axis.XTick object at 0x000000002D2DC3C8&gt;]</code></pre>
+<pre class="python"><code>lon_formatter = LongitudeFormatter(zero_direction_label=True)
+lat_formatter = LatitudeFormatter()
+
+ax.xaxis.set_major_formatter(lon_formatter)
+ax.yaxis.set_major_formatter(lat_formatter)
+
+ax.set_extent([-8, -1.5, 55.3, 59])
+
+
+plt.scatter(scot[&#39;Longitude&#39;],scot[&#39;Latitude&#39;],
+                    color=&#39;red&#39;, marker=&#39;^&#39;, transform=ccrs.PlateCarree())
+plt.show()
+# plt.savefig(&quot;munros.png&quot;)
+</code></pre>
+<p><img src="/post/2019-12-23-python-for-oceeanographers-and-marine-scientists_files/figure-html/unnamed-chunk-13-1.png" width="240" /></p>
