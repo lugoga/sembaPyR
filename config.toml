@@ -1,5 +1,5 @@
 ############################ Default configuration #########################
-baseURL = ""
+baseURL = "https://semba-blog.netlify.com/"
 languageCode = "en-us"
 # site title 
 title = "pinab"
