@@ -1,5 +1,5 @@
 ############################ Default configuration #########################
-baseURL = "/"
+baseURL = ""
 languageCode = "en-us"
 # site title 
 title = "pinab"
