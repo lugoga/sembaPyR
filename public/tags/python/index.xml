@@ -6,10 +6,28 @@
     <description>Recent content in Python on pinab</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 22 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 25 Dec 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/python/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>dplython: dplyr function in python</title>
+      <link>/post/dplython-dplyr-function-in-python/</link>
+      <pubDate>Wed, 25 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/dplython-dplyr-function-in-python/</guid>
+      <description>Tidyverse is changing the way we do programming in R world. This ecosystem contains a collection of packages that ensure consistent data manipulation and visualisation space across the specturm of data science, which has modernized the R programming.</description>
+    </item>
+    
+    <item>
+      <title>Pandas Data Structures</title>
+      <link>/post/pandas-data-structures/</link>
+      <pubDate>Tue, 24 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/pandas-data-structures/</guid>
+      <description>Panda DataFramesPandas is an open source Python library that provide easy–to–use data structures organized in tabular format. Pandas is particularly designed to work with tabular data—data that has rows representing records and columns representing variables.</description>
+    </item>
     
     <item>
       <title>Make use both of R and Python languages for efficient data science</title>

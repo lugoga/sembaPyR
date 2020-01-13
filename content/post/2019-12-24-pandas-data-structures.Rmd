@@ -1,0 +1,157 @@
+---
+title: Pandas Data Structures
+image: "/images/post/PandasLogo.svg"
+author: Masumbuko Semba
+date: '2019-12-24'
+slug: pandas-data-structures
+categories: []
+tags:
+  - Pandas
+  - Python
+---
+
+Panda DataFrames
+Pandas is an open source Python library that provide easy--to--use data structures organized in tabular format. Pandas is particularly designed to work with tabular data---data that has rows representing records and columns representing variables. The usage of Pandas in data science has grown exponentially in recent years because it allows scientist to work more efficient and effectively. In this post, I will demonstrate the basic capabilities of Pandas module. It is a deep libary, and I will touch the surface. For detailed information, I encourage you to consult the [Pandas's] document(http://pandas.pydata.org/pandas-docs/stable/). 
+
+```{r}
+require(reticulate)
+use_python("c:/Python/Anaconda3/")
+```
+
+
+We first load the packages into the sessions
+```{python}
+import pandas as pd
+import numpy as np
+from matplotlib import pyplot as plt
+```
+
+## Pandas Data Structures: Series
+A series represent a one--deimentional array of data. The main difference between a series and numpy array is tha a series has an index. The index contains the labels that we use to access the data. There are various ways to creas a Pandas's Series, in this post I will show you some of them
+
+```{python}
+sites = ['Pemba', 'Zanzibar', 'Mafia']
+sst = [25.4,26.3,26.1]
+
+sst_df = pd.Series(sst, index=sites)
+sst_df
+```
+
+Panda's seris has built in plotting function
+```{python}
+sst_df.plot(kind = "bar")
+plt.show()
+```
+
+Arithmetic operations and most numpy function can be applied to Series. An important point is that the Series keep their index during such operations.
+```{python}
+np.log(sst_df/ sst_df**2)
+```
+
+We can access the element in the series with index
+```{python}
+sst_df.index
+```
+
+We can also use the `.loc` function to obtain the values of the element.Note the use of `[]` instead of `()`
+
+```{python}
+
+sst_df.loc["Pemba"]
+
+```
+
+We can also access the  value using the location
+```{python}
+sst_df.iloc[1]
+```
+
+We can pass a list or array to loc to pick multiple rows
+```{python}
+sst_df[["Pemba", "Mafia"]]
+```
+
+And even use a slice notation
+```{python}
+sst_df["Pemba": "Mafia"]
+```
+
+Similar to `index` function that brings index names, We can obtain the values of the column using the `values` function
+```{python}
+sst_df.values
+```
+
+## Pandas Data Structures: DataFrame
+Althous Pandas Series provide necessary tools and function for data manipulation, but it is limited to a single column. A more useful Pandas data structure is the `DataFrame`. A `DataFrame` bind together series that share the same index. Its like a table in a spreadsheet.  First we construct a dictionary
+```{python, eval = FALSE}
+
+data = {"sst": [26.3,np.nan,25.3,25.8], 
+        "chl": [0.12,0.21,0.32,np.nan], 
+        "rain": [320,125,250,np.nan]}
+```
+
+let's import a comma--separated data of Iris dataset with the `read_excel()` function from Pandas module. The `pd.read_excel()` will automatically convert excel spreadsheet to Panda's DataFrame
+
+```{python}
+df = pd.read_excel("c:/Users/Semba/Documents/kuguru.xlsx")
+df
+```
+
+A wide Pandas tools and functions are available to explore and analyse the data structured in Pandas DataFrame. 
+```{python}
+df.head(); df.tail()
+```
+
+
+```{python}
+df.min()
+```
+
+```{python}
+df.median()
+```
+
+
+```{python}
+df.max()
+```
+
+
+```{python}
+df.mean()
+```
+
+
+```{python}
+df.std()
+```
+
+
+```{python}
+df.describe()
+```
+
+
+We can get a single column as a Series using python's getitem syntax on the DataFrame object.
+```{python}
+df[['time', 'chl']]
+```
+
+
+
+We can also index using a boolean series. This is very useful
+
+```{python}
+df[df.sst > 29.4]
+```
+
+Plotting
+```{python}
+
+import seaborn as sns
+
+plt.figure(figsize=(6, 4))
+sns.pairplot(data=df)
+plt.show()
+```
+

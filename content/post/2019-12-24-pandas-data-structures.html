@@ -1,0 +1,184 @@
+---
+title: Pandas Data Structures
+image: "/images/post/PandasLogo.svg"
+author: Masumbuko Semba
+date: '2019-12-24'
+slug: pandas-data-structures
+categories: []
+tags:
+  - Pandas
+  - Python
+---
+
+
+
+<p>Panda DataFrames
+Pandas is an open source Python library that provide easy–to–use data structures organized in tabular format. Pandas is particularly designed to work with tabular data—data that has rows representing records and columns representing variables. The usage of Pandas in data science has grown exponentially in recent years because it allows scientist to work more efficient and effectively. In this post, I will demonstrate the basic capabilities of Pandas module. It is a deep libary, and I will touch the surface. For detailed information, I encourage you to consult the [Pandas’s] document(<a href="http://pandas.pydata.org/pandas-docs/stable/" class="uri">http://pandas.pydata.org/pandas-docs/stable/</a>).</p>
+<pre class="r"><code>require(reticulate)</code></pre>
+<pre><code>## Loading required package: reticulate</code></pre>
+<pre class="r"><code>use_python(&quot;c:/Python/Anaconda3/&quot;)</code></pre>
+<p>We first load the packages into the sessions</p>
+<pre class="python"><code>import pandas as pd
+import numpy as np
+from matplotlib import pyplot as plt</code></pre>
+<div id="pandas-data-structures-series" class="section level2">
+<h2>Pandas Data Structures: Series</h2>
+<p>A series represent a one–deimentional array of data. The main difference between a series and numpy array is tha a series has an index. The index contains the labels that we use to access the data. There are various ways to creas a Pandas’s Series, in this post I will show you some of them</p>
+<pre class="python"><code>sites = [&#39;Pemba&#39;, &#39;Zanzibar&#39;, &#39;Mafia&#39;]
+sst = [25.4,26.3,26.1]
+
+sst_df = pd.Series(sst, index=sites)
+sst_df</code></pre>
+<pre><code>## Pemba       25.4
+## Zanzibar    26.3
+## Mafia       26.1
+## dtype: float64</code></pre>
+<p>Panda’s seris has built in plotting function</p>
+<pre class="python"><code>sst_df.plot(kind = &quot;bar&quot;)
+plt.show()</code></pre>
+<p><img src="/post/2019-12-24-pandas-data-structures_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>Arithmetic operations and most numpy function can be applied to Series. An important point is that the Series keep their index during such operations.</p>
+<pre class="python"><code>np.log(sst_df/ sst_df**2)</code></pre>
+<pre><code>## Pemba      -3.234749
+## Zanzibar   -3.269569
+## Mafia      -3.261935
+## dtype: float64</code></pre>
+<p>We can access the element in the series with index</p>
+<pre class="python"><code>sst_df.index</code></pre>
+<pre><code>## Index([&#39;Pemba&#39;, &#39;Zanzibar&#39;, &#39;Mafia&#39;], dtype=&#39;object&#39;)</code></pre>
+<p>We can also use the <code>.loc</code> function to obtain the values of the element.Note the use of <code>[]</code> instead of <code>()</code></p>
+<pre class="python"><code>
+sst_df.loc[&quot;Pemba&quot;]</code></pre>
+<pre><code>## 25.4</code></pre>
+<p>We can also access the value using the location</p>
+<pre class="python"><code>sst_df.iloc[1]</code></pre>
+<pre><code>## 26.3</code></pre>
+<p>We can pass a list or array to loc to pick multiple rows</p>
+<pre class="python"><code>sst_df[[&quot;Pemba&quot;, &quot;Mafia&quot;]]</code></pre>
+<pre><code>## Pemba    25.4
+## Mafia    26.1
+## dtype: float64</code></pre>
+<p>And even use a slice notation</p>
+<pre class="python"><code>sst_df[&quot;Pemba&quot;: &quot;Mafia&quot;]</code></pre>
+<pre><code>## Pemba       25.4
+## Zanzibar    26.3
+## Mafia       26.1
+## dtype: float64</code></pre>
+<p>Similar to <code>index</code> function that brings index names, We can obtain the values of the column using the <code>values</code> function</p>
+<pre class="python"><code>sst_df.values</code></pre>
+<pre><code>## array([25.4, 26.3, 26.1])</code></pre>
+</div>
+<div id="pandas-data-structures-dataframe" class="section level2">
+<h2>Pandas Data Structures: DataFrame</h2>
+<p>Althous Pandas Series provide necessary tools and function for data manipulation, but it is limited to a single column. A more useful Pandas data structure is the <code>DataFrame</code>. A <code>DataFrame</code> bind together series that share the same index. Its like a table in a spreadsheet. First we construct a dictionary</p>
+<pre class="python"><code>data = {&quot;sst&quot;: [26.3,np.nan,25.3,25.8], 
+        &quot;chl&quot;: [0.12,0.21,0.32,np.nan], 
+        &quot;rain&quot;: [320,125,250,np.nan]}</code></pre>
+<p>let’s import a comma–separated data of Iris dataset with the <code>read_excel()</code> function from Pandas module. The <code>pd.read_excel()</code> will automatically convert excel spreadsheet to Panda’s DataFrame</p>
+<pre class="python"><code>df = pd.read_excel(&quot;c:/Users/Semba/Documents/kuguru.xlsx&quot;)
+df</code></pre>
+<pre><code>##        chl     sst       time  month  year
+## 0    0.264  25.380 2002-07-01      7  2002
+## 1    0.288  25.100 2002-08-01      8  2002
+## 2    0.306  25.352 2002-09-01      9  2002
+## 3    0.231  26.129 2002-10-01     10  2002
+## 4    0.152  27.680 2002-11-01     11  2002
+## ..     ...     ...        ...    ...   ...
+## 145  0.217  25.398 2014-08-01      8  2014
+## 146  0.202  25.608 2014-09-01      9  2014
+## 147  0.157  26.395 2014-10-01     10  2014
+## 148  0.108  28.037 2014-11-01     11  2014
+## 149  0.087  29.215 2014-12-01     12  2014
+## 
+## [150 rows x 5 columns]</code></pre>
+<p>A wide Pandas tools and functions are available to explore and analyse the data structured in Pandas DataFrame.</p>
+<pre class="python"><code>df.head(); df.tail()</code></pre>
+<pre><code>##      chl     sst       time  month  year
+## 0  0.264  25.380 2002-07-01      7  2002
+## 1  0.288  25.100 2002-08-01      8  2002
+## 2  0.306  25.352 2002-09-01      9  2002
+## 3  0.231  26.129 2002-10-01     10  2002
+## 4  0.152  27.680 2002-11-01     11  2002
+##        chl     sst       time  month  year
+## 145  0.217  25.398 2014-08-01      8  2014
+## 146  0.202  25.608 2014-09-01      9  2014
+## 147  0.157  26.395 2014-10-01     10  2014
+## 148  0.108  28.037 2014-11-01     11  2014
+## 149  0.087  29.215 2014-12-01     12  2014</code></pre>
+<pre class="python"><code>df.min()</code></pre>
+<pre><code>## chl                    0.084
+## sst                   24.944
+## time     2002-07-01 00:00:00
+## month                      1
+## year                    2002
+## dtype: object</code></pre>
+<pre class="python"><code>df.median()</code></pre>
+<pre><code>## chl         0.1435
+## sst        27.7165
+## month       7.0000
+## year     2008.0000
+## dtype: float64</code></pre>
+<pre class="python"><code>df.max()</code></pre>
+<pre><code>## chl                    0.339
+## sst                   29.984
+## time     2014-12-01 00:00:00
+## month                     12
+## year                    2014
+## dtype: object</code></pre>
+<pre class="python"><code>df.mean()</code></pre>
+<pre><code>## chl         0.160667
+## sst        27.404880
+## month       6.620000
+## year     2008.240000
+## dtype: float64</code></pre>
+<pre class="python"><code>df.std()</code></pre>
+<pre><code>## chl      0.055021
+## sst      1.486930
+## month    3.461524
+## year     3.626302
+## dtype: float64</code></pre>
+<pre class="python"><code>df.describe()</code></pre>
+<pre><code>##               chl        sst       month         year
+## count  150.000000  150.00000  150.000000   150.000000
+## mean     0.160667   27.40488    6.620000  2008.240000
+## std      0.055021    1.48693    3.461524     3.626302
+## min      0.084000   24.94400    1.000000  2002.000000
+## 25%      0.122250   25.83825    4.000000  2005.000000
+## 50%      0.143500   27.71650    7.000000  2008.000000
+## 75%      0.193000   28.78525   10.000000  2011.000000
+## max      0.339000   29.98400   12.000000  2014.000000</code></pre>
+<p>We can get a single column as a Series using python’s getitem syntax on the DataFrame object.</p>
+<pre class="python"><code>df[[&#39;time&#39;, &#39;chl&#39;]]</code></pre>
+<pre><code>##           time    chl
+## 0   2002-07-01  0.264
+## 1   2002-08-01  0.288
+## 2   2002-09-01  0.306
+## 3   2002-10-01  0.231
+## 4   2002-11-01  0.152
+## ..         ...    ...
+## 145 2014-08-01  0.217
+## 146 2014-09-01  0.202
+## 147 2014-10-01  0.157
+## 148 2014-11-01  0.108
+## 149 2014-12-01  0.087
+## 
+## [150 rows x 2 columns]</code></pre>
+<p>We can also index using a boolean series. This is very useful</p>
+<pre class="python"><code>df[df.sst &gt; 29.4]</code></pre>
+<pre><code>##        chl     sst       time  month  year
+## 32   0.146  29.466 2005-03-01      3  2005
+## 33   0.157  29.532 2005-04-01      4  2005
+## 80   0.124  29.430 2009-03-01      3  2009
+## 92   0.148  29.984 2010-03-01      3  2010
+## 93   0.123  29.631 2010-04-01      4  2010
+## 128  0.128  29.473 2013-03-01      3  2013</code></pre>
+<p>Plotting</p>
+<pre class="python"><code>
+import seaborn as sns
+
+plt.figure(figsize=(6, 4))
+sns.pairplot(data=df)</code></pre>
+<pre><code>## &lt;seaborn.axisgrid.PairGrid object at 0x0000000027E7F808&gt;</code></pre>
+<pre class="python"><code>plt.show()</code></pre>
+<p><img src="/post/2019-12-24-pandas-data-structures_files/figure-html/unnamed-chunk-23-1.png" width="960" /></p>
+</div>

@@ -6,10 +6,37 @@
     <description>Recent content in Posts on pinab</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 23 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 27 Dec 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Integrate `R` and `Python` in Rstudio to Power Your Analytical Capability</title>
+      <link>/post/combine-the-power-of-r-and-python-in-d/</link>
+      <pubDate>Fri, 27 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/combine-the-power-of-r-and-python-in-d/</guid>
+      <description>If you work with data science, R and Python must be the two programming languages that you use the most.</description>
+    </item>
+    
+    <item>
+      <title>dplython: dplyr function in python</title>
+      <link>/post/dplython-dplyr-function-in-python/</link>
+      <pubDate>Wed, 25 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/dplython-dplyr-function-in-python/</guid>
+      <description>Tidyverse is changing the way we do programming in R world. This ecosystem contains a collection of packages that ensure consistent data manipulation and visualisation space across the specturm of data science, which has modernized the R programming.</description>
+    </item>
+    
+    <item>
+      <title>Pandas Data Structures</title>
+      <link>/post/pandas-data-structures/</link>
+      <pubDate>Tue, 24 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/pandas-data-structures/</guid>
+      <description>Panda DataFramesPandas is an open source Python library that provide easy–to–use data structures organized in tabular format. Pandas is particularly designed to work with tabular data—data that has rows representing records and columns representing variables.</description>
+    </item>
     
     <item>
       <title>Mapping with Cartopy in Python</title>
@@ -17,7 +44,7 @@
       <pubDate>Mon, 23 Dec 2019 00:00:00 +0000</pubDate>
       
       <guid>/post/mapping-with-cartopy-in-python/</guid>
-      <description>Today we will learn about Cartopy, one of the most common packages for making maps within python, Another popular and powerful library is Basemap; however, Basemap is going away and being replaced with Cartopy in the near future, For this reason, investing your time in learning mapping in python with Cartopy module is recommended.</description>
+      <description>Today we will learn about Cartopy, one of the most common packages for making maps within python. Another popular and powerful library is Basemap; however, Basemap is going away and being replaced with Cartopy in the near future, For this reason, investing your time in learning mapping in python with Cartopy module is recommended.</description>
     </item>
     
     <item>

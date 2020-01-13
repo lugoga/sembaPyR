@@ -14,7 +14,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-Today we will learn about Cartopy, one of the most common packages for making maps within python, Another popular and powerful library is Basemap; however, Basemap is going away and being replaced with Cartopy in the near future, For this reason, investing your time in learning mapping in python with Cartopy module is recommended.
+Today we will learn about Cartopy, one of the most common packages for making maps within python. Another popular and powerful library is Basemap; however, Basemap is going away and being replaced with Cartopy in the near future, For this reason, investing your time in learning mapping in python with Cartopy module is recommended.
 
 We thank [Research in Computing Earth Sciences](https://rabernat.github.io/research_computing_2018/maps-with-cartopy.html) because most of material in this post are gleaned from their website. I also thank Phil Elson, a developer of Cartopy and created excellent [Cartopy Tutorial](https://github.com/SciTools/cartopy-tutorial)
 
@@ -249,9 +249,195 @@ ax.set_global()
 # ax.set_extent([-170,170,-30,30])
 ax.coastlines()
 ax.contourf(lon2d, lat2d, datar, cmap = "jet")
-# ax.gridlines()
-# ax.gridlines(draw_labels=True, xlocs=[32, 36, 40, 44])
+ax.gridlines(draw_labels=True, xlocs=np.arange(-180,180,30))
 plt.show()
 
+```
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+import cartopy.crs as ccrs
+import cartopy.feature as cfeature
+from matplotlib.offsetbox import AnchoredText
+
+
+
+fig = plt.figure()
+# ax = fig.add_subplot(1, 1, 1, projection=ccrs.PlateCarree())
+ax = plt.axes(projection=ccrs.PlateCarree())
+ax.set_extent([80, 170, -45, 30], crs=ccrs.PlateCarree())
+
+# Put a background image on for nice sea rendering.
+ax.stock_img()
+
+# Create a feature for States/Admin 1 regions at 1:50m from Natural Earth
+states_provinces = cfeature.NaturalEarthFeature(
+    category='cultural',
+    name='admin_1_states_provinces_lines',
+    scale='50m',
+    facecolor='none')
+
+SOURCE = 'Natural Earth'
+LICENSE = 'public domain'
+
+ax.add_feature(cfeature.LAND)
+ax.add_feature(cfeature.COASTLINE)
+ax.add_feature(states_provinces, edgecolor='gray')
+
+# Add a text annotation for the license information to the
+# the bottom right corner.
+text = AnchoredText(r'$\mathcircled{{c}}$ {}; license: {}'
+                    ''.format(SOURCE, LICENSE),
+                    loc=4, prop={'size': 12}, frameon=True)
+ax.add_artist(text)
+plt.show()
+
+
+```
+
+```{python}
+
+fig = plt.figure()
+ax = plt.axes(projection=ccrs.PlateCarree())
+ax.set_extent([20, 70, -40, 20], crs=ccrs.PlateCarree())
+ax.add_feature(cfeature.LAND, edgecolor='gray')
+ax.add_feature(cfeature.BORDERS)
+ax.add_feature(cfeature.COASTLINE)
+ax.gridlines(xlocs=np.arange(20,70,10), draw_labels=True, crs=ccrs.PlateCarree())
+plt.show()
+```
+
+
+```{python}
+
+fig = plt.figure()
+ax = plt.axes(projection=ccrs.PlateCarree())
+ax.set_extent([20, 70, -40, 20], crs=ccrs.PlateCarree())
+# Put a background image on for nice sea rendering.
+ax.stock_img()
+ax.add_feature(cfeature.BORDERS)
+ax.add_feature(cfeature.COASTLINE)
+ax.gridlines(xlocs=np.arange(20,70,10), draw_labels=True, crs=ccrs.PlateCarree())
+plt.show()
+```
+
+```{python}
+fig = plt.figure()
+ax = fig.add_subplot(1, 1, 1, projection=ccrs.PlateCarree())
+ax.set_extent([-20, 60, -40, 45], crs=ccrs.PlateCarree())
+ax.stock_img()
+ax.add_feature(cfeature.LAND)
+ax.add_feature(cfeature.OCEAN)
+ax.add_feature(cfeature.COASTLINE)
+ax.add_feature(cfeature.BORDERS, linestyle='dotted')
+ax.add_feature(cfeature.LAKES, alpha=0.5)
+ax.add_feature(cfeature.RIVERS)
+plt.show()
+```
+
+
+## Global Map
+An example of a simple map that compares Geodetic and Plate Carree lines between two locations.
+
+```{python}
+ 
+fig = plt.figure(figsize=(8, 4))
+ax = fig.add_subplot(1, 1, 1, projection=ccrs.Robinson(central_longitude=0))
+ax.set_global()
+ax.stock_img()
+ax.coastlines()
+ax.gridlines()
+# ax.plot(-0.08, 51.53, 'o', transform=ccrs.PlateCarree())
+# ax.plot([-0.08, 132], [51.53, 43.17], transform=ccrs.PlateCarree())
+# ax.plot([-0.08, 132], [51.53, 43.17], transform=ccrs.Geodetic())
+plt.show()
+```
+
+## Filled contours
+We use the gridded sea surface temperature and because I want to see the pacific and Indian ocean, I used the Mollweide projection and center the longitude to 130.
+
+```{python}
+## read the netcdf file with Dataset function from netCDF4 module
+sst = nc.Dataset("e:/MatlabWorking/GHRSST/20050101.nc")
+## sst.variables
+## extract individual varibales in the nc file
+time = sst.variables['time'][:]
+lon = sst.variables['lon'][:]
+lat = sst.variables['lat'][:]
+sst = sst.variables['analysed_sst']
+## extract an array of the first day and convert temperature from Kelvin to Degree Celsius
+sstr = sst[0,:,:]-273
+
+## create a rectangular of the long and lat
+lon2d, lat2d = np.meshgrid(lon, lat)
+
+
+plt.figure(figsize=(8,4))
+ax = plt.axes(projection=ccrs.Mollweide(central_longitude=160),)
+ax.set_global()
+# ax.set_extent([-170,170,-30,30])
+ax.coastlines()
+ax.contourf(lon2d, lat2d, datar, transform=ccrs.PlateCarree(), cmap='nipy_spectral')
+# ax.gridlines(draw_labels=True, xlocs=np.arange(-180,180,30))# unsupported with Mollweide
+plt.show()
+
+```
+
+We can also read and map the mean sea level anomaly as the chunk below illustrate
+```{python}
+## read mean sea level anomaly data
+msla = nc.Dataset("e:/MatlabWorking/Altimetry/msla_h/indian_ocean-twosat-msla-h_010193_311295.nc")
+## msla.variables
+time = msla.variables['time'][:]
+lon = msla.variables['lon'][:]
+lat = msla.variables['lat'][:]
+sla = msla.variables['sla']
+sla30 = sla[30,:,:]
+
+lon2d, lat2d = np.meshgrid(lon, lat)
+
+plt.figure(figsize=(6,5))
+ax = plt.axes(projection=ccrs.Mollweide(central_longitude=60))
+# ax.set_global()
+ax.set_extent([20,120,-50,20])
+ax.coastlines()
+# ax.add_feature(cfeature.BORDERS, linestyle = "dotted") # uncomment to plot country boundaries
+ax.contourf(lon2d, lat2d, sla30, transform=ccrs.PlateCarree(), cmap='nipy_spectral')
+ax.gridlines(draw_labels=False, xlocs=np.arange(-180,180,30))
+plt.show()
+```
+
+
+
+```{python, eval = FALSE}
+from sklearn import preprocessing
+
+sla30[sla30 == -2147483647] = np.nan
+normalized_sla = preprocessing.normalize(sla30)
+
+sla30_nan = sla30.copy
+sla30_nan[sla30_nan == -2147483647] = np.nan
+
+plt.figure(figsize=(6,5))
+ax = plt.axes(projection=ccrs.Mollweide(central_longitude=60))
+# ax.set_global()
+ax.set_extent([20,120,-50,20])
+ax.coastlines()
+# ax.add_feature(cfeature.BORDERS, linestyle = "dotted") # uncomment to plot country boundaries
+ax.contourf(lon2d, lat2d, sla30, transform=ccrs.PlateCarree(), cmap='nipy_spectral')
+ax.gridlines(draw_labels=False, xlocs=np.arange(-180,180,30))
+plt.show()
+```
+
+
+```{python, eval = FALSE}
+import numpy as np
+import matplotlib.pyplot as plt
+import iris
+import iris.plot as iplt
+import iris.quickplot as qplt
+
+import iris.analysis.cartography
 ```
 

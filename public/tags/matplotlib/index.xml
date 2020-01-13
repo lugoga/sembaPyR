@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>matplotlib on pinab</title>
+    <link>/tags/matplotlib/</link>
+    <description>Recent content in matplotlib on pinab</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 27 Dec 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/matplotlib/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Integrate `R` and `Python` in Rstudio to Power Your Analytical Capability</title>
+      <link>/post/combine-the-power-of-r-and-python-in-d/</link>
+      <pubDate>Fri, 27 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/combine-the-power-of-r-and-python-in-d/</guid>
+      <description>If you work with data science, R and Python must be the two programming languages that you use the most.</description>
+    </item>
+    
+  </channel>
+</rss>

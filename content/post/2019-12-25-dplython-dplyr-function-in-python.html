@@ -1,0 +1,215 @@
+---
+title: 'dplython: dplyr function in python'
+author: Masumbuko Semba
+date: '2019-12-25'
+slug: dplython-dplyr-function-in-python
+categories: []
+tags:
+  - Python
+  - dplyr
+  - dplython
+  - Masumbuko Semba
+  - data science
+  - Pandas
+  - R
+  - R Markdown
+---
+
+
+
+<p><strong>Tidyverse</strong> is changing the way we do programming in <strong>R</strong> world. This ecosystem contains a collection of packages that ensure consistent data <em>manipulation</em> and <em>visualisation</em> space across the specturm of data science, which has <em>modernized</em> the R programming. The value of these tools has been so great that many of them have been ported to <strong>Python.</strong> That’s why we thought we should provide an introduction to <strong>tidyverse</strong> for Python blog post. One of the package of tidyverse is dplyr—a popular package for data manipulation in R programming. Because of its power,Python has developed a similarr to dplyr, called <strong>dplython.</strong> . You can simply install dplython in Python using the <code>pip</code> function</p>
+<pre class="r"><code>pip  install dplython</code></pre>
+<pre class="r"><code>require(reticulate)</code></pre>
+<pre><code>## Loading required package: reticulate</code></pre>
+<pre class="r"><code>use_python(&quot;c:/Python/Anaconda3/&quot;)</code></pre>
+<p>We first load the packages into the sessions</p>
+<pre class="python"><code>import dplython
+import pandas as pd
+import matplotlib.pyplot as plt
+# from ggplot import *</code></pre>
+<p>Let’s load a few function from from the dplython module that we are going to use inside python</p>
+<pre class="python"><code>
+from dplython import (DplyFrame,diamonds, select, sample_n, sample_frac, mutate, sift, summarize, group_by, arrange, DelayFunction, X, head, transmute)</code></pre>
+<p>For the examples in this post, I use a dataset that chlorophyll and sea surface temperature over fifty months. The file was organized in Excel spreadsheet. Let’s import a this file with the <code>read_excel()</code> function from Pandas module. The <code>pd.read_excel()</code> will automatically convert excel spreadsheet to Panda’s DataFrame</p>
+<pre class="python"><code>bongo = pd.read_excel(&quot;c:/Users/Semba/Documents/kuguru.xlsx&quot;)</code></pre>
+<pre><code>## c:\Python\Anaconda3\lib\site-packages\xlrd\xlsx.py:266: PendingDeprecationWarning: This method will be removed in future versions.  Use &#39;tree.iter()&#39; or &#39;list(tree.iter())&#39; instead.
+##   for elem in self.tree.iter() if Element_has_iter else self.tree.getiterator():</code></pre>
+<pre class="python"><code>bongo.head()</code></pre>
+<pre><code>##      chl     sst       time  month  year
+## 0  0.264  25.380 2002-07-01      7  2002
+## 1  0.288  25.100 2002-08-01      8  2002
+## 2  0.306  25.352 2002-09-01      9  2002
+## 3  0.231  26.129 2002-10-01     10  2002
+## 4  0.152  27.680 2002-11-01     11  2002</code></pre>
+<p>After we’ve read in our data, we need to convert it to an object called a <code>DplyFrame</code>, which we do using a method from <strong>dplython</strong>.</p>
+<pre class="python"><code>bongo_dp = DplyFrame(bongo)
+bongo_dp.head()</code></pre>
+<pre><code>##      chl     sst       time  month  year
+## 0  0.264  25.380 2002-07-01      7  2002
+## 1  0.288  25.100 2002-08-01      8  2002
+## 2  0.306  25.352 2002-09-01      9  2002
+## 3  0.231  26.129 2002-10-01     10  2002
+## 4  0.152  27.680 2002-11-01     11  2002</code></pre>
+<div id="select-variablescolumns" class="section level2">
+<h2>Select variables–columns</h2>
+<p>Once we have converted the file into <code>DplyFrame</code> object, we can perform “dplyr-like” operations in python. With dplython, selecting columns—variable of interest is done like below:</p>
+<pre class="python"><code>bongo_dp &gt;&gt; select(X.time, X.chl, X.sst)</code></pre>
+<pre><code>##           time    chl     sst
+## 0   2002-07-01  0.264  25.380
+## 1   2002-08-01  0.288  25.100
+## 2   2002-09-01  0.306  25.352
+## 3   2002-10-01  0.231  26.129
+## 4   2002-11-01  0.152  27.680
+## ..         ...    ...     ...
+## 145 2014-08-01  0.217  25.398
+## 146 2014-09-01  0.202  25.608
+## 147 2014-10-01  0.157  26.395
+## 148 2014-11-01  0.108  28.037
+## 149 2014-12-01  0.087  29.215
+## 
+## [150 rows x 3 columns]</code></pre>
+<p>You notice how X is appended to each field name, which is a little different from the select command in dplyr. We also use<code>&gt;&gt;</code>instead of <code>%&gt;%</code> as a pipe operator. If you’re not as familiar with dplyr from R, the pipe operator basically allows to you apply a function to the output of a function or object to the left the operator (the &gt;&gt; in dplython). In the case above, the select function is just being applied to state_info.</p>
+<p>To select only the top 10 or bottom 10 rows, we can chain the head or tail methods, respectively, to our line of code above. Here the head and tail functions are being applied to the result to the left of each respective pipe operator.</p>
+</div>
+<div id="filter-recordsrows" class="section level2">
+<h2>Filter records—rows</h2>
+<p>Unlike dplyr that use <code>filter</code> to select records in rows, dplython use <code>sift</code> function. For example, if we want to get only the records where a sea surface temperature is above 29.4<sup>o</sup>C, we would write a code as:</p>
+<pre class="python"><code>bongo_dp &gt;&gt; sift(X.sst &gt; 29.4)</code></pre>
+<pre><code>##        chl     sst       time  month  year
+## 32   0.146  29.466 2005-03-01      3  2005
+## 33   0.157  29.532 2005-04-01      4  2005
+## 80   0.124  29.430 2009-03-01      3  2009
+## 92   0.148  29.984 2010-03-01      3  2010
+## 93   0.123  29.631 2010-04-01      4  2010
+## 128  0.128  29.473 2013-03-01      3  2013</code></pre>
+</div>
+<div id="sorting-and-arranging-records" class="section level2">
+<h2>Sorting and arranging records</h2>
+<p>To sort our DplyFrame by a column, we can use the <code>arrange</code> function similar to <strong>dplyr</strong>:</p>
+<pre class="python"><code>bongo_dp &gt;&gt; arrange(X.sst)</code></pre>
+<pre><code>##        chl     sst       time  month  year
+## 25   0.311  24.944 2004-08-01      8  2004
+## 13   0.305  24.987 2003-08-01      8  2003
+## 73   0.186  24.990 2008-08-01      8  2008
+## 24   0.304  25.051 2004-07-01      7  2004
+## 37   0.239  25.059 2005-08-01      8  2005
+## ..     ...     ...        ...    ...   ...
+## 32   0.146  29.466 2005-03-01      3  2005
+## 128  0.128  29.473 2013-03-01      3  2013
+## 33   0.157  29.532 2005-04-01      4  2005
+## 93   0.123  29.631 2010-04-01      4  2010
+## 92   0.148  29.984 2010-03-01      3  2010
+## 
+## [150 rows x 5 columns]</code></pre>
+<p>We may sort more than onve variable, for instance in the chunk below we sort first by sst and then by chl value in ascending order</p>
+<pre class="python"><code>bongo_dp &gt;&gt; arrange(X.sst, X.chl)</code></pre>
+<pre><code>##        chl     sst       time  month  year
+## 25   0.311  24.944 2004-08-01      8  2004
+## 13   0.305  24.987 2003-08-01      8  2003
+## 73   0.186  24.990 2008-08-01      8  2008
+## 24   0.304  25.051 2004-07-01      7  2004
+## 37   0.239  25.059 2005-08-01      8  2005
+## ..     ...     ...        ...    ...   ...
+## 32   0.146  29.466 2005-03-01      3  2005
+## 128  0.128  29.473 2013-03-01      3  2013
+## 33   0.157  29.532 2005-04-01      4  2005
+## 93   0.123  29.631 2010-04-01      4  2010
+## 92   0.148  29.984 2010-03-01      3  2010
+## 
+## [150 rows x 5 columns]</code></pre>
+</div>
+<div id="create-new-variable" class="section level2">
+<h2>Create New Variable</h2>
+<p>Like dplyr, <code>mutate</code> function is used to compute and create new variable in the dataframe. For instance, we might be interested to</p>
+<pre class="python"><code>bongo_dp &gt;&gt; mutate(ratio = X.sst / X.chl)</code></pre>
+<pre><code>##        chl     sst       time  month  year       ratio
+## 0    0.264  25.380 2002-07-01      7  2002   96.136364
+## 1    0.288  25.100 2002-08-01      8  2002   87.152778
+## 2    0.306  25.352 2002-09-01      9  2002   82.849673
+## 3    0.231  26.129 2002-10-01     10  2002  113.112554
+## 4    0.152  27.680 2002-11-01     11  2002  182.105263
+## ..     ...     ...        ...    ...   ...         ...
+## 145  0.217  25.398 2014-08-01      8  2014  117.041475
+## 146  0.202  25.608 2014-09-01      9  2014  126.772277
+## 147  0.157  26.395 2014-10-01     10  2014  168.121019
+## 148  0.108  28.037 2014-11-01     11  2014  259.601852
+## 149  0.087  29.215 2014-12-01     12  2014  335.804598
+## 
+## [150 rows x 6 columns]</code></pre>
+</div>
+<div id="summarizing-data" class="section level2">
+<h2>Summarizing data</h2>
+<p>We can aggregate data by chaining the <code>summarize</code> and <code>group_by</code> functions:</p>
+<pre class="python"><code>bongo_dp  &gt;&gt; group_by(X.month) &gt;&gt; summarize(chl_mean = X.chl.mean(), sst_mean = X.sst.mean())</code></pre>
+<pre><code>##     month  chl_mean   sst_mean
+## 0       1  0.124000  28.617250
+## 1       2  0.132333  28.682083
+## 2       3  0.137417  29.241000
+## 3       4  0.139500  29.131250
+## 4       5  0.139583  27.987917
+## 5       6  0.166167  26.778083
+## 6       7  0.216538  25.635077
+## 7       8  0.227615  25.243385
+## 8       9  0.231846  25.463308
+## 9      10  0.180923  26.229308
+## 10     11  0.121538  27.571462
+## 11     12  0.100923  28.740615</code></pre>
+<pre class="python"><code>wastani = bongo_dp  &gt;&gt; group_by(X.month) &gt;&gt; summarize(chl_mean = X.chl.mean(), sst_mean = X.sst.mean())
+
+import seaborn as sns</code></pre>
+<pre><code>## c:\Python\Anaconda3\lib\importlib\_bootstrap.py:219: RuntimeWarning: numpy.ufunc size changed, may indicate binary incompatibility. Expected 192 from C header, got 216 from PyObject
+##   return f(*args, **kwds)
+## c:\Python\Anaconda3\lib\importlib\_bootstrap.py:219: RuntimeWarning: numpy.ufunc size changed, may indicate binary incompatibility. Expected 192 from C header, got 216 from PyObject
+##   return f(*args, **kwds)
+## c:\Python\Anaconda3\lib\importlib\_bootstrap.py:219: RuntimeWarning: numpy.ufunc size changed, may indicate binary incompatibility. Expected 192 from C header, got 216 from PyObject
+##   return f(*args, **kwds)</code></pre>
+<pre class="python"><code>fig = plt.figure()
+sns.pointplot(x=wastani.chl_mean, y=wastani.sst_mean, hue=wastani.sst_mean)
+plt.show()</code></pre>
+<p><img src="/post/2019-12-25-dplython-dplyr-function-in-python_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+</div>
+<div id="get-the-frequency-of-observations" class="section level2">
+<h2>Get the frequency of observations</h2>
+<p>To get the count of the values in a specific column, use the <code>count</code> function. For example, we get number of observations of each year</p>
+<pre class="python"><code>
+from dplython import count
+bongo_dp &gt;&gt; count(X.year)</code></pre>
+<pre><code>##     year     n
+## 0   2002   6.0
+## 1   2003  12.0
+## 2   2004  12.0
+## 3   2005  12.0
+## 4   2006  12.0
+## 5   2007  12.0
+## 6   2008  12.0
+## 7   2009  12.0
+## 8   2010  12.0
+## 9   2011  12.0
+## 10  2012  12.0
+## 11  2013  12.0
+## 12  2014  12.0</code></pre>
+</div>
+<div id="subsampling" class="section level2">
+<h2>Subsampling</h2>
+<p>The <code>sample_n</code> function can be used to randomly sample rows from our dataset. You just need to pass whatever number of rows you want to randomly select. For instance, in the chunk below, I want five random sample of observations from the dataset</p>
+<pre class="python"><code>
+bongo_dp &gt;&gt; sample_n(5)</code></pre>
+<pre><code>##        chl     sst       time  month  year
+## 33   0.157  29.532 2005-04-01      4  2005
+## 132  0.242  25.410 2013-07-01      7  2013
+## 93   0.123  29.631 2010-04-01      4  2010
+## 59   0.155  27.096 2007-06-01      6  2007
+## 133  0.248  25.110 2013-08-01      8  2013</code></pre>
+<p>Unlike the <code>sample_n</code>, which select number of sample, <code>sample_frac</code> function allows to sample percatange of the data. For example, the chunk below highlight the randomly sample 5% of the obervations:</p>
+<pre class="python"><code>
+bongo_dp &gt;&gt; sample_frac(.05)</code></pre>
+<pre><code>##        chl     sst       time  month  year
+## 130  0.150  27.318 2013-05-01      5  2013
+## 72   0.173  25.420 2008-07-01      7  2008
+## 102  0.084  29.008 2011-01-01      1  2011
+## 47   0.163  26.630 2006-06-01      6  2006
+## 9    0.163  29.346 2003-04-01      4  2003
+## 71   0.150  26.814 2008-06-01      6  2008
+## 39   0.212  25.847 2005-10-01     10  2005
+## 118  0.136  27.283 2012-05-01      5  2012</code></pre>
+</div>

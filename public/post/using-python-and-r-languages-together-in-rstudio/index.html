@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en-us"><head>
+  <meta charset="utf-8">
+  <title>Using Python and R languages together  in Rstudio</title>
+
+  <!-- mobile responsive meta -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description"
+    content="This is meta description">
+  
+  <meta name="author" content="Themefisher">
+  <meta name="generator" content="Hugo 0.62.0" />
+
+  <!-- plugins -->
+  
+  <link rel="stylesheet" href="/plugins/bootstrap/bootstrap.min.css ">
+  
+  <link rel="stylesheet" href="/plugins/themify-icons/themify-icons.css ">
+  
+
+  <!-- Main Stylesheet -->
+  
+  <link rel="stylesheet" href="/scss/style.min.css" media="screen">
+
+  <!--Favicon-->
+  <link rel="shortcut icon" href="/images/favicon.png " type="image/x-icon">
+  <link rel="icon" href="/images/favicon.png " type="image/x-icon">
+
+  
+  <script>
+    (function (w, d, s, l, i) {
+      w[l] = w[l] || [];
+      w[l].push({
+        'gtm.start': new Date().getTime(),
+        event: 'gtm.js'
+      });
+      var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s),
+        dl = l != 'dataLayer' ? '&l=' + l : '';
+      j.async = true;
+      j.src =
+        'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+      f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', '');
+  </script>
+  
+
+</head><body>
+    
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+<!-- preloader start -->
+<div class="preloader">
+  
+</div>
+<!-- preloader end -->
+<!-- navigation -->
+<header class="fixed-top navigation">
+  <div class="container">
+    
+    <nav class="navbar navbar-expand-lg navbar-light bg-transparent">
+      <a class="navbar-brand"href="/"><img class="img-fluid" src="/images/pinab_logo.svg" alt="pinab"></a>
+      <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#navigation">
+        <i class="ti-menu h3"></i>
+      </button>
+
+      <div class="collapse navbar-collapse text-center" id="navigation">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/"> Home </a>
+          </li>
+          
+            
+            <li class="nav-item">
+              <a class="nav-link" href="/contact">Contact</a>
+            </li>
+            
+          
+            
+            <li class="nav-item">
+              <a class="nav-link" href="/tools">tools</a>
+            </li>
+            
+          
+            
+            <li class="nav-item">
+              <a class="nav-link" href="/projects">Projects</a>
+            </li>
+            
+          
+        </ul>
+        
+        <!-- search -->
+        <div class="search">
+          <button id="searchOpen" class="search-btn"><i class="ti-search"></i></button>
+          <div class="search-wrapper">
+            <form action="//search" class="h-100">
+              <input class="search-box px-4" id="search-query" name="s" type="search" placeholder="Type & Hit Enter...">
+            </form>
+            <button id="searchClose" class="search-close"><i class="ti-close text-dark"></i></button>
+          </div>
+        </div>
+        
+      </div>
+    </nav>
+  </div>
+</header>
+<!-- /navigation --> <div class="py-5 d-none d-lg-block"></div> 
+
+<section class="section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 mx-auto block shadow mb-5">
+        <h2>Using Python and R languages together  in Rstudio</h2>
+        <div class="mb-3 post-meta">
+          <a href="/author/masumbuko-semba">Masumbuko semba</a>,
+          26/19/2019, 
+        </div>
+        
+        <div class="content mb-5">
+          
+
+
+<pre class="r"><code>require(reticulate)</code></pre>
+<pre><code>## Loading required package: reticulate</code></pre>
+<pre class="r"><code>use_python(&quot;c:/Python/Anaconda3/&quot;)</code></pre>
+<pre class="python"><code>import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns</code></pre>
+<div id="read-data-with-r-convert-to-python-pandas-and-plot-with-python-visualization-tools" class="section level2">
+<h2>read data with R convert to python pandas and plot with python visualization tools</h2>
+<p>load tidyverse</p>
+<pre class="r"><code>require(tidyverse)</code></pre>
+<pre><code>## Loading required package: tidyverse</code></pre>
+<pre><code>## -- Attaching packages --------------------------- tidyverse 1.3.0 --</code></pre>
+<pre><code>## v ggplot2 3.2.1     v purrr   0.3.3
+## v tibble  2.1.3     v dplyr   0.8.3
+## v tidyr   1.0.0     v stringr 1.4.0
+## v readr   1.3.1     v forcats 0.4.0</code></pre>
+<pre><code>## -- Conflicts ------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<p>read the excel file with readxl and manipulate the data with dplyr to the write format</p>
+<pre class="r"><code>kgr = readxl::read_excel(&quot;c:/Users/Semba/Documents/kuguru.xlsx&quot;)
+kgr_df = kgr %&gt;% mutate(month = lubridate::month(time, abbr = T, label = T))%&gt;% select(sst,chl, month) </code></pre>
+<p>make a copy of pandas dataframe from tible with the <code>r.</code> function and then use the seaborn module to make a pairplot</p>
+<pre class="python"><code>## construct pandas data frame from tibble
+kgrpy = r.kgr_df
+## make a pairplot with seaborn
+sns.pairplot(kgrpy, hue=&quot;month&quot;)</code></pre>
+<pre><code>## &lt;seaborn.axisgrid.PairGrid object at 0x00000000239CC548&gt;</code></pre>
+<pre class="python"><code>plt.show()</code></pre>
+<p><img src="/post/2019-12-26-using-python-and-r-languages-together-in-rstudio_files/figure-html/unnamed-chunk-5-1.png" width="556" /></p>
+<pre class="python"><code>fig = plt.figure()
+sns.scatterplot(data=kgrpy, x=&#39;chl&#39;, y=&#39;sst&#39;, hue=&#39;month&#39;)
+plt.show()</code></pre>
+<p><img src="/post/2019-12-26-using-python-and-r-languages-together-in-rstudio_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+</div>
+<div id="read-data-with-pandas-python-andconvert-to-tibl-and-plot-with-r-visualization-tools" class="section level2">
+<h2>read data with pandas python andconvert to tibl and plot with R visualization tools</h2>
+<pre class="python"><code>kgpy = pd.read_excel((&quot;c:/Users/Semba/Documents/kuguru.xlsx&quot;))</code></pre>
+<pre class="r"><code>kg_r = py$kgpy%&gt;% mutate(month = lubridate::month(time, abbr = T, label = T))%&gt;% select(sst,chl, month) </code></pre>
+<pre class="r"><code>ggplot(data = kg_r, aes(x = chl, y = sst, col = month))+geom_point()</code></pre>
+<p><img src="/post/2019-12-26-using-python-and-r-languages-together-in-rstudio_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+</div>
+
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+<footer class="py-4 bg-light border-top">
+  <div class="container">
+    <div class="row justify-content-between align-items-center">
+      <div class="col-lg-4 text-center text-lg-left mb-4 mb-lg-0">
+        <a href="/" class="d-block pb-3"><img src="/images/pinab_logo.svg" class="img-fluid" alt="pinab"></a>
+      </div>
+      <div class="col-lg-4 text-center mb-4 mb-lg-0">
+        <ul class="list-inline mb-0">
+          
+          <li class="list-inline-item"><a class="text-dark d-block p-2" href="/contact">Contact</a></li>
+          
+          <li class="list-inline-item"><a class="text-dark d-block p-2" href="/tools">tools</a></li>
+          
+        </ul>
+      </div>
+      <div class="col-lg-4 text-lg-right text-center mb-4 mb-lg-0">
+        <ul class="list-inline social-icon mb-0">
+          
+          <li class="list-inline-item"><a href="#"><i class="ti-facebook"></i></a></li>
+          
+          <li class="list-inline-item"><a href="#"><i class="ti-twitter-alt"></i></a></li>
+          
+          <li class="list-inline-item"><a href="#"><i class="ti-github"></i></a></li>
+          
+          <li class="list-inline-item"><a href="#"><i class="ti-linkedin"></i></a></li>
+          
+        </ul>
+      </div>
+    </div>
+    <div class="text-center mt-4">
+      <span>© 2019 <a href="https://semba-blog.netlify.com">Semba</a> All Rights Reserved</span>
+    </div>
+  </div>
+</footer>
+
+
+
+
+<script>
+  var indexURL = "/index.json"
+</script>
+
+
+<!-- JS Plugins -->
+
+<script src="/plugins/jQuery/jquery.min.js"></script>
+
+<script src="/plugins/bootstrap/bootstrap.min.js"></script>
+
+<script src="/plugins/search/fuse.min.js"></script>
+
+<script src="/plugins/search/mark.js"></script>
+
+<script src="/plugins/search/search.js"></script>
+
+<!-- Main Script -->
+
+<script src="/js/script.min.js"></script>
+<!-- google analitycs -->
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+      m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+  ga('create', 'Your ID', 'auto');
+  ga('send', 'pageview');
+</script></body>
+
+</html>

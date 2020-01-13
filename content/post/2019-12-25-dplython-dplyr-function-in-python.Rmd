@@ -1,0 +1,140 @@
+---
+title: 'dplython: dplyr function in python'
+author: Masumbuko Semba
+date: '2019-12-25'
+slug: dplython-dplyr-function-in-python
+categories: []
+tags:
+  - Python
+  - dplyr
+  - dplython
+  - Masumbuko Semba
+  - data science
+  - Pandas
+  - R
+  - R Markdown
+---
+**Tidyverse** is changing the way we do programming in **R** world.  This ecosystem contains a collection of packages that ensure consistent data *manipulation* and *visualisation* space across the specturm of data science, which has *modernized* the R programming. The value of these tools has been so great that many of them have been ported to **Python.** That’s why we thought we should provide an introduction to **tidyverse** for Python blog post. One of the package of tidyverse is dplyr---a popular package for data manipulation in R programming. Because of its power,Python has developed a similarr to dplyr, called **dplython.** . You can simply install dplython in Python using the `pip` function 
+
+```{r, eval=FALSE}
+pip  install dplython
+```
+
+
+```{r}
+
+require(reticulate)
+use_python("c:/Python/Anaconda3/")
+
+```
+
+
+We first load the packages into the sessions
+```{python}
+import dplython
+import pandas as pd
+import matplotlib.pyplot as plt
+# from ggplot import *
+```
+
+
+Let’s load a few function from from the dplython module that we are going to use inside python
+
+```{python}
+
+from dplython import (DplyFrame,diamonds, select, sample_n, sample_frac, mutate, sift, summarize, group_by, arrange, DelayFunction, X, head, transmute)
+
+```
+
+For the examples in this post, I use a dataset that chlorophyll and sea surface temperature over fifty months. The file was organized in Excel spreadsheet. Let's import a  this file with the `read_excel()` function from Pandas module. The `pd.read_excel()` will automatically convert excel spreadsheet to Panda's DataFrame
+
+```{python}
+bongo = pd.read_excel("c:/Users/Semba/Documents/kuguru.xlsx")
+bongo.head()
+```
+
+After we’ve read in our data, we need to convert it to an object called a `DplyFrame`, which we do using a method from **dplython**. 
+
+```{python}
+bongo_dp = DplyFrame(bongo)
+bongo_dp.head()
+
+```
+
+## Select variables--columns
+Once we have converted the file into `DplyFrame` object, we can perform “dplyr-like” operations in python. With dplython, selecting columns---variable of interest is done like below:
+
+```{python}
+bongo_dp >> select(X.time, X.chl, X.sst)
+```
+
+You notice how X is appended to each field name, which is a little different from the select command in dplyr. We also use` >> `instead of `%>%` as a pipe operator. If you’re not as familiar with dplyr from R, the pipe operator basically allows to you apply a function to the output of a function or object to the left the operator (the >> in dplython). In the case above, the select function is just being applied to state_info.
+
+To select only the top 10 or bottom 10 rows, we can chain the head or tail methods, respectively, to our line of code above. Here the head and tail functions are being applied to the result to the left of each respective pipe operator.
+
+## Filter records---rows
+Unlike dplyr that use `filter` to select records in rows, dplython use `sift` function. For example, if we want to get only the records where a sea surface temperature is above 29.4^o^C, we would write a code as:
+```{python}
+bongo_dp >> sift(X.sst > 29.4)
+```
+
+## Sorting and arranging records
+To sort our DplyFrame by a column, we can use the `arrange` function similar to **dplyr**:
+```{python}
+bongo_dp >> arrange(X.sst)
+```
+
+We may sort more than onve variable, for instance in the chunk below we sort first by sst and then by chl value in ascending order
+```{python}
+bongo_dp >> arrange(X.sst, X.chl)
+```
+
+
+## Create New Variable
+Like dplyr,  `mutate` function is used to compute and create new variable in the dataframe. For instance, we might be interested to 
+```{python}
+bongo_dp >> mutate(ratio = X.sst / X.chl)
+```
+
+
+## Summarizing data
+We can aggregate data by chaining the `summarize` and `group_by` functions:
+
+```{python}
+bongo_dp  >> group_by(X.month) >> summarize(chl_mean = X.chl.mean(), sst_mean = X.sst.mean())
+```
+
+```{python}
+wastani = bongo_dp  >> group_by(X.month) >> summarize(chl_mean = X.chl.mean(), sst_mean = X.sst.mean())
+
+import seaborn as sns
+fig = plt.figure()
+sns.pointplot(x=wastani.chl_mean, y=wastani.sst_mean, hue=wastani.sst_mean)
+plt.show()
+
+```
+
+## Get the frequency of observations
+To get the count of the values in a specific column, use the `count` function. For example, we get number of observations of each year
+
+```{python}
+
+from dplython import count
+bongo_dp >> count(X.year)
+```
+
+## Subsampling
+The `sample_n` function can be used to randomly sample rows from our dataset. You just need to pass whatever number of rows you want to randomly select. For instance, in the chunk below, I want five random sample of observations from the dataset
+
+```{python}
+
+bongo_dp >> sample_n(5)
+```
+
+Unlike the `sample_n`, which select number of sample, `sample_frac` function allows to sample percatange of the data. For example, the chunk below highlight the randomly sample 5% of the obervations:
+
+```{python}
+
+bongo_dp >> sample_frac(.05)
+```
+

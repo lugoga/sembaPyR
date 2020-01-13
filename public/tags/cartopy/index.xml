@@ -17,7 +17,7 @@
       <pubDate>Mon, 23 Dec 2019 00:00:00 +0000</pubDate>
       
       <guid>/post/mapping-with-cartopy-in-python/</guid>
-      <description>Today we will learn about Cartopy, one of the most common packages for making maps within python, Another popular and powerful library is Basemap; however, Basemap is going away and being replaced with Cartopy in the near future, For this reason, investing your time in learning mapping in python with Cartopy module is recommended.</description>
+      <description>Today we will learn about Cartopy, one of the most common packages for making maps within python. Another popular and powerful library is Basemap; however, Basemap is going away and being replaced with Cartopy in the near future, For this reason, investing your time in learning mapping in python with Cartopy module is recommended.</description>
     </item>
     
   </channel>

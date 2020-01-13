@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>dplython on pinab</title>
+    <link>/tags/dplython/</link>
+    <description>Recent content in dplython on pinab</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 25 Dec 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/dplython/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>dplython: dplyr function in python</title>
+      <link>/post/dplython-dplyr-function-in-python/</link>
+      <pubDate>Wed, 25 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/dplython-dplyr-function-in-python/</guid>
+      <description>Tidyverse is changing the way we do programming in R world. This ecosystem contains a collection of packages that ensure consistent data manipulation and visualisation space across the specturm of data science, which has modernized the R programming.</description>
+    </item>
+    
+  </channel>
+</rss>
